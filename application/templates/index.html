@@ -3,6 +3,25 @@
 {% block body %}
 <p>
 	<h1>HYGOn keskustelufoorumi</h1>
-	Hei maailma.
+	<a href="/login/">Kirjaudu sisään</a>
+	<br>
+	<a href="/register/">Rekisteröidy</a>
+	
+	<p>
+
+	<a href="/thread/new/"><button>Luo viestiketju</button></a>
+
+	<hr>
+
+	<h1>Viimeisimmät viestiketjut</h1>
+	
+	<hr>
+
+	{% for thread in threads %}
+	<div>
+		<h2>{{ thread.topic }}</h2>
+		Kategoriat: <!--{{ thread.categories }}-->
+	</div>
+	{% endfor %}
 </p>
 {% endblock %}

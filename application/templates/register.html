@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<p>
+	<h1>Luo tunnus</h1>
+	<form method="POST" action="{{ url_for('register_user') }}">
+		Käyttäjänimi:
+		<br>
+		<input type="text" name="username">
+		<br>
+		Sähköposti:
+		<br>
+		<input type="text" name="email">
+		<br>
+		Etunimi:
+		<br>
+		<input type="text" name="first_name">
+		<br>
+		Sukunimi:
+		<br>
+		<input type="text" name="surname">
+		<br>
+		Salasana:
+		<br>
+		<input type="password" name="password">
+		<br>
+		Salasana uusiksi:
+		<br>
+		<input type="password" name="password_confirmation">
+		<br><br>
+		<input type="submit" value="Lähetä">
+	</form>
+</p>
+{% endblock %}
