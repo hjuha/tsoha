@@ -13,6 +13,8 @@ def index():
 		thread.sender = User.query.get(thread.sender_id)
 		thread.posting_time = date_to_string(thread.posting_time)
 
+	threads = threads[::-1]
+
 	return render_template("index.html", threads = threads)
 
 @app.route("/users/")
