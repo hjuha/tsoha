@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<p>
+	<h1>Kirjaudu sisään</h1>
+	<form method="POST" action="{{ url_for('login') }}">
+		<table>
+			<tr>
+				<td>
+					{{ form.username.label }}
+				</td>
+				<td>
+					{{ form.username }}
+				</td>
+				<td>
+					<ul>
+						{% for error in form.username.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{{ form.password.label }}
+				</td>
+				<td>
+					{{ form.password }}
+				</td>
+				<td>
+					<ul>
+						{% for error in form.password.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<input type="submit" value="Lähetä">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<span style="color: #cc0000">{{ error }}</span>
+				</td>
+			</tr>
+		</table>
+	</form>
+</p>
+{% endblock %}

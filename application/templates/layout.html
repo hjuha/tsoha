@@ -6,6 +6,18 @@
 	</head>
 
 	<body>
+		{% if current_user.is_authenticated %}
+			<p>
+				Kirjautunut: {{ current_user.username }} | <a href="{{ url_for('logout') }}">Kirjaudu ulos</a>
+			</p>
+		{% else %}
+			<p>
+				<a href="{{ url_for('login') }}">Kirjaudu sisään</a>
+				|
+				<a href="{{ url_for('register') }}">Rekisteröidy</a>
+			</p>
+		{% endif %}
+
 		{% block body %}
 		<p>
 			Hello World!
