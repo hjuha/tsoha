@@ -1,5 +1,7 @@
 _This project is made for the course [Tietokantasovellus](https://materiaalit.github.io/tsoha-18/) of the University of Helsinki._
 
+Sovellus löytyy osoitteesta https://hygo-tsoha.herokuapp.com/.
+
 # HYGOn keskustelufoorumi
 Helsingin yliopiston geneerisen opiskelijajärjestön (HYGO) keskustelufoorumi on foorumi, jossa HYGOn jäsenet voivat avata viestiketjuja ja vastata niihin. Kaikki pystyvät kuitenkin näkemään viestit. Viestissä lukee kirjoittajan nimi ja julkaisuaika. Kukin viestiketjuista voi kuulua moneen kategoriaan, kuten _tapahtumat_ tai _ilmoitukset_.
 
