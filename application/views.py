@@ -5,13 +5,13 @@ from application.threads.models import Thread
 from application.threads.forms import ThreadForm
 from application.utils.date_format import date_to_string
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def index():
 	threads = Thread.query.all()
 
 	for thread in threads:
 		thread.sender = User.query.get(thread.sender_id)
-		thread.posting_time = date_to_string(thread.posting_time)
+		thread.time = date_to_string(thread.posting_time)
 
 	threads = threads[::-1]
 
