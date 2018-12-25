@@ -20,3 +20,7 @@ def index():
 @app.route("/users/")
 def users():
 	return render_template("users.html", users = User.query.all())
+
+@app.route("/404/")
+def error404():
+	return redirect(url_for("index"))
