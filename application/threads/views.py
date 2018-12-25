@@ -2,7 +2,7 @@ from application import app, db
 from flask import redirect, render_template, request, url_for
 from application.auth.models import User
 from application.threads.models import Thread, Post
-from application.threads.forms import ThreadForm
+from application.threads.forms import ThreadForm, ReplyThreadForm
 from flask_login import login_required, current_user
 
 @app.route("/thread/new/", methods=["GET", "POST"])
@@ -38,14 +38,45 @@ def post_new_thread():
 
 	return redirect(url_for("index"))
 
-@app.route("/thread/<thread_id>/")
+@app.route("/thread/<thread_id>/", methods = ["POST"])
+@login_required
+def reply_thread(thread_id):
+	form = ReplyThreadForm(request.form)
+	try: 
+		thread_id = int(thread_id)
+		thread = Thread.query.get(thread_id)
+
+		posts = Post.query.filter(Post.thread_id == thread_id)
+		
+		if not form.validate():
+			return render_template("threads/thread.html", thread = thread, posts = posts, form = ReplyThreadForm())
+	
+		content = form.content.data
+		# while the last character of the post is a whitespace or a newline, delete it
+		while content[-1] == ' ' or content[-1] == '\n':
+			content = content[:-1]
+
+		sender_id = current_user.id
+
+		post = Post(content, sender_id, thread_id)
+		
+		db.session().add(post)
+		db.session().commit()
+
+		return redirect(url_for("get_thread", thread_id = thread_id, thread = thread, posts = posts, form = ReplyThreadForm()))
+	except ValueError:
+		return redirect(url_for("error404"))
+
+@app.route("/thread/<thread_id>/", methods = ["GET"])
 def get_thread(thread_id):
 	try: 
 		thread_id = int(thread_id)
 		thread = Thread.query.get(thread_id)
+		
 		posts = Post.query.filter(Post.thread_id == thread_id)
+		posts = list(posts)
 		for post in posts:
 			post.sender = User.query.get(post.sender_id)
-		return render_template("threads/thread.html", thread = thread, posts = posts)
+		return render_template("threads/thread.html", thread = thread, posts = posts, form = ReplyThreadForm())		
 	except ValueError:
 		return redirect(url_for("error404"))

@@ -12,7 +12,7 @@ def index():
 	for thread in threads:
 		thread.sender = User.query.get(thread.sender_id)
 		thread.time = date_to_string(thread.posting_time)
-
+	print(type(threads))
 	threads = threads[::-1]
 
 	return render_template("index.html", threads = threads)

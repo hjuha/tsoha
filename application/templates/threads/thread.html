@@ -7,10 +7,40 @@
 	{% for post in posts %}
 	<div class="post" id="post{{ post.id }}">
 		{{ post.sender.first_name }} {{ post.sender.surname }}
-		<p>
+		<p></p>
 		<pre style="font-size: 16px">{{ post.content }}</pre>
 	</div>
 	<hr>
 	{% endfor %}
+	
+	<h2>Vastaa viestiketjuun</h2>
+	{% if current_user.is_authenticated %}
+		<form method="POST" action="{{ url_for('reply_thread', thread_id = thread.id) }}">
+			<table>
+				<tr>
+					<td>
+						{{ form.content.label }}
+					</td>
+					<td>
+						{{ form.content }}
+					</td>
+					<td>
+						<ul>
+							{% for error in form.content.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<input type="submit" value="Vastaa viestiketjuun">
+					</td>
+				</tr>
+			</table>
+		</form>
+	{% else %}
+		Sinun on kirjauduttava sisään vastataksesi viestiketjuun.
+	{% endif %}
 </p>
 {% endblock %}
