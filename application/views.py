@@ -23,4 +23,8 @@ def users():
 
 @app.route("/404/")
 def error404():
-	return redirect(url_for("index"))
+	return render_template("404.html")
+
+@app.errorhandler(404)
+def on404(e):
+	return render_template("404.html")
