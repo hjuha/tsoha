@@ -63,7 +63,7 @@ def reply_thread(thread_id):
 		db.session().add(post)
 		db.session().commit()
 
-		return redirect(url_for("get_thread", thread_id = thread_id, thread = thread, posts = posts, form = ReplyThreadForm()))
+		return redirect(url_for("get_thread", thread_id = thread_id))
 	except ValueError:
 		return redirect(url_for("error404"))
 
