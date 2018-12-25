@@ -2,9 +2,6 @@
 
 {% block body %}
 <p>
-	<h1>HYGOn keskustelufoorumi</h1>
-	<p>
-
 	<a href="/thread/new/"><button>Luo viestiketju</button></a>
 
 	<hr>
@@ -15,7 +12,7 @@
 
 	{% for thread in threads %}
 	<div>
-		<h2>{{ thread.topic }}</h2>
+		<h2><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
 		Kirjoittaja: {{ thread.sender.first_name }} {{ thread.sender.surname }}<br>
 		Kategoriat: <!--{{ thread.categories }}--><br>
 		Kirjoitettu: {{ thread.time }}<br>

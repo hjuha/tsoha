@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<p>
+	<h1>{{ thread.topic }}</h1>
+	
+	{% for post in posts %}
+	<div class="post" id="post{{ post.id }}">
+		{{ post.sender.first_name }} {{ post.sender.surname }}
+		<p>
+		<pre style="font-size: 16px">{{ post.content }}</pre>
+	</div>
+	<hr>
+	{% endfor %}
+</p>
+{% endblock %}

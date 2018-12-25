@@ -1,7 +1,7 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
 from application.auth.models import User
-from application.threads.models import Thread
+from application.threads.models import Thread, Post
 from application.threads.forms import ThreadForm
 from flask_login import login_required, current_user
 
@@ -18,10 +18,34 @@ def post_new_thread():
 
 	topic = form.topic.data
 	content = form.content.data
+
+	# while the last character of the post is a whitespace or a newline, delete it
+	while content[-1] == ' ' or content[-1] == '\n':
+		content = content[:-1]
+
 	sender_id = current_user.id
-	thread = Thread(topic, content, sender_id)
+
+	thread = Thread(topic, sender_id)
 
 	db.session().add(thread)
 	db.session().commit()
 
+	thread_id = thread.id
+	post = Post(content, sender_id, thread_id)
+
+	db.session().add(post)
+	db.session().commit()
+
 	return redirect(url_for("index"))
+
+@app.route("/thread/<thread_id>/")
+def get_thread(thread_id):
+	try: 
+		thread_id = int(thread_id)
+		thread = Thread.query.get(thread_id)
+		posts = Post.query.filter(Post.thread_id == thread_id)
+		for post in posts:
+			post.sender = User.query.get(post.sender_id)
+		return render_template("threads/thread.html", thread = thread, posts = posts)
+	except ValueError:
+		return redirect(url_for("error404"))
