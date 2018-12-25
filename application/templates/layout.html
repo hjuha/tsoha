@@ -6,6 +6,7 @@
 	</head>
 
 	<body>
+		<h1><a href="{{ url_for('index') }}">HYGOn keskustelufoorumi</a></h1>
 		{% if current_user.is_authenticated %}
 			<p>
 				Kirjautunut: {{ current_user.username }} | <a href="{{ url_for('logout') }}">Kirjaudu ulos</a>
@@ -17,7 +18,7 @@
 				<a href="{{ url_for('register') }}">Rekisteröidy</a>
 			</p>
 		{% endif %}
-
+		<hr>
 		{% block body %}
 		<p>
 			Hello World!
