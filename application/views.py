@@ -11,7 +11,7 @@ def index():
 
 	for thread in threads:
 		thread.sender = User.query.get(thread.sender_id)
-		thread.time = date_to_string(thread.posting_time)
+		thread.posted = date_to_string(thread.date_created)
 	print(type(threads))
 	threads = threads[::-1]
 

@@ -5,8 +5,8 @@ class Thread(db.Model):
 
 	topic = db.Column(db.String(50), nullable = False)
 	sender_id = db.Column(db.Integer, db.ForeignKey("account.id"), nullable = False)
-	posting_time = db.Column(db.DateTime, default = db.func.current_timestamp())
-	modification_time = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+	date_created = db.Column(db.DateTime, default = db.func.current_timestamp())
+	date_modified = db.Column(db.DateTime, default = db.func.current_timestamp(), onupdate = db.func.current_timestamp())
 
 	posts = db.relationship("Post", backref = "thread", lazy = True)
 
@@ -18,8 +18,8 @@ class Post(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 
 	content = db.Column(db.String(1000), nullable = False)
-	posting_time = db.Column(db.DateTime, default = db.func.current_timestamp())
-	modification_time = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+	date_created = db.Column(db.DateTime, default = db.func.current_timestamp())
+	date_modified = db.Column(db.DateTime, default = db.func.current_timestamp(), onupdate = db.func.current_timestamp())
 
 	sender_id = db.Column(db.Integer, db.ForeignKey("account.id"), nullable = False)
 	thread_id = db.Column(db.Integer, db.ForeignKey("thread.id"), nullable = False)

@@ -4,6 +4,7 @@ from application.auth.models import User
 from application.threads.models import Thread, Post
 from application.threads.forms import ThreadForm, ReplyThreadForm
 from flask_login import login_required, current_user
+from application.utils.date_format import date_to_string
 
 @app.route("/thread/new/", methods=["GET", "POST"])
 @login_required
@@ -77,6 +78,8 @@ def get_thread(thread_id):
 		posts = list(posts)
 		for post in posts:
 			post.sender = User.query.get(post.sender_id)
+			post.posted = date_to_string(post.date_created)
+			post.modified = date_to_string(post.date_modified)
 		return render_template("threads/thread.html", thread = thread, posts = posts, form = ReplyThreadForm())		
 	except ValueError:
 		return redirect(url_for("error404"))

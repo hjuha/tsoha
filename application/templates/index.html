@@ -16,7 +16,7 @@
 		<h2><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
 		Kirjoittaja: {{ thread.sender.first_name }} {{ thread.sender.surname }}<br>
 		Kategoriat: <!--{{ thread.categories }}--><br>
-		Kirjoitettu: {{ thread.time }}<br>
+		Kirjoitettu: {{ thread.posted }}<br>
 	</div>
 	{% endfor %}
 </p>

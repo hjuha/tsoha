@@ -7,6 +7,13 @@
 	{% for post in posts %}
 	<div class="post" id="post{{ post.id }}">
 		{{ post.sender.first_name }} {{ post.sender.surname }}
+		<br>
+		{% if post.posted == post.modified %}
+			<small>Julkaistu {{ post.posted }}</small>
+		{% else %}
+			<small>Julkaistu {{ post.posted }} | Muokattu {{ post.posted }}</small>
+		{% endif %}
+		
 		<p></p>
 		<pre style="font-size: 16px">{{ post.content }}</pre>
 	</div>
