@@ -34,3 +34,6 @@ class User(Base):
 
 	def is_authenticated(self):
 		return True
+
+	def is_admin(self):
+		return self.admin

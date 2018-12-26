@@ -4,6 +4,7 @@ from application.auth.models import User
 from application.threads.models import Thread
 from application.threads.forms import ThreadForm
 from application.utils.date_format import date_to_string
+from application import admin_required
 
 @app.route("/", methods=["GET"])
 def index():
@@ -18,6 +19,7 @@ def index():
 	return render_template("index.html", threads = threads)
 
 @app.route("/users/")
+@admin_required
 def users():
 	return render_template("users.html", users = User.query.all())
 

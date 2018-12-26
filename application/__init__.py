@@ -14,6 +14,34 @@ else:
 
 db = SQLAlchemy(app)
 
+from os import urandom
+app.config["SECRET_KEY"] = urandom(32)
+
+from flask_login import LoginManager, current_user
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+login_manager.login_view = "login"
+login_manager.login_message = "Ole hyvä ja kirjaudu käyttääksesi sivustoa."
+
+from functools import wraps
+from flask import url_for, redirect
+
+def admin_required(fn):
+	@wraps(fn)
+	def decorated_view(*args, **kwargs):
+		if not current_user:
+			return login_manager.unauthorized()
+
+		if not current_user.is_authenticated:
+			return login_manager.unauthorized()
+
+		if not current_user.is_admin():
+			return redirect(url_for("index"))
+		
+		return fn(*args, **kwargs)
+	return decorated_view
+
 from application import views
 
 from application.auth import views
@@ -23,15 +51,6 @@ from application.threads import views
 from application.threads import models
 
 from application.auth.models import User
-from os import urandom
-app.config["SECRET_KEY"] = urandom(32)
-
-from flask_login import LoginManager
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-login_manager.login_view = "login"
-login_manager.login_message = "Ole hyvä ja kirjaudu käyttääksesi sivustoa."
 
 @login_manager.user_loader
 def load_user(user_id):
