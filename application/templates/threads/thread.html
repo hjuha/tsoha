@@ -24,7 +24,7 @@
 			<a href="#" onclick="
 				reply = document.getElementById('reply{{ post.id }}');
 				reply.style.display = 'inline';
-				reply.children[0].children[0].children[0].children[1].children[0].value = '{{ post.content }}'
+				reply.children[0].children[0].children[0].children[1].children[0].value = `{{ post.content }}`
 			">Muokkaa</a>
 			 | 
 			<a href="{{ url_for('delete_post', post_id = post.id) }}">Poista</a>
