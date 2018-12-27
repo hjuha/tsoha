@@ -9,7 +9,7 @@ class ThreadForm(FlaskForm):
 	class Meta:
 		csrf = False
 
-class ReplyThreadForm(FlaskForm):
+class PostForm(FlaskForm):
 	content = StringField("Vastaus", [validators.Length(min=2, max=1000)], widget = TextArea())
 
 	class Meta:

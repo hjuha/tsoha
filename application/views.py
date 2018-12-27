@@ -5,6 +5,7 @@ from application.threads.models import Thread
 from application.threads.forms import ThreadForm
 from application.utils.date_format import date_to_string
 from application import admin_required
+from flask_login import current_user
 
 @app.route("/", methods=["GET"])
 def index():
@@ -13,7 +14,11 @@ def index():
 	for thread in threads:
 		thread.sender = User.query.get(thread.sender_id)
 		thread.posted = date_to_string(thread.date_created)
-	print(type(threads))
+		thread.deletable = False
+		if current_user.is_authenticated:
+			user = User.query.get(current_user.get_id())
+			if user.is_admin() or user.id == thread.sender_id:
+				thread.deletable = True
 	threads = threads[::-1]
 
 	return render_template("index.html", threads = threads)

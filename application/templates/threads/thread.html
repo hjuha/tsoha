@@ -4,6 +4,10 @@
 <p>
 	<h1>{{ thread.topic }}</h1>
 	
+	{% if thread.deletable %}
+		<a href="{{ url_for('delete_thread', thread_id = thread.id) }}"<button type="button" class="btn btn-danger">Poista viestiketju</button></a>
+	{% endif %}
+
 	{% for post in posts %}
 	<div class="post" id="post{{ post.id }}">
 		{{ post.sender.first_name }} {{ post.sender.surname }}
@@ -11,11 +15,44 @@
 		{% if post.posted == post.modified %}
 			<small>Julkaistu {{ post.posted }}</small>
 		{% else %}
-			<small>Julkaistu {{ post.posted }} | Muokattu {{ post.posted }}</small>
+			<small>Muokattu {{ post.modified }}</small>
 		{% endif %}
 		
 		<p></p>
 		<pre style="font-size: 16px">{{ post.content }}</pre>
+		{% if post.deletable %}
+			<a href="#" onclick="
+				reply = document.getElementById('reply{{ post.id }}');
+				reply.style.display = 'inline';
+				reply.children[0].children[0].children[0].children[1].children[0].value = '{{ post.content }}'
+			">Muokkaa</a>
+			 | 
+			<a href="{{ url_for('delete_post', post_id = post.id) }}">Poista</a>
+			<form id="reply{{ post.id }}" style="display: none" method="POST" action="{{ url_for('edit_post', post_id = post.id) }}">
+				<table>
+					<tr>
+						<td>
+							{{ form.content.label }}
+						</td>
+						<td>
+							{{ form.content }}
+						</td>
+						<td>
+							<ul>
+								{% for error in form.content.errors %}
+									<li>{{ error }}</li>
+								{% endfor %}
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<input type="submit" value="Vastaa viestiketjuun">
+						</td>
+					</tr>
+				</table>
+			</form>
+		{% endif %}
 	</div>
 	<hr>
 	{% endfor %}

@@ -2,7 +2,7 @@ from application import app, db
 from flask import redirect, render_template, request, url_for
 from application.auth.models import User
 from application.threads.models import Thread, Post
-from application.threads.forms import ThreadForm, ReplyThreadForm
+from application.threads.forms import ThreadForm, PostForm
 from flask_login import login_required, current_user
 from application.utils.date_format import date_to_string
 
@@ -42,7 +42,7 @@ def post_new_thread():
 @app.route("/thread/<thread_id>/", methods = ["POST"])
 @login_required
 def reply_thread(thread_id):
-	form = ReplyThreadForm(request.form)
+	form = PostForm(request.form)
 	try: 
 		thread_id = int(thread_id)
 		thread = Thread.query.get(thread_id)
@@ -50,7 +50,7 @@ def reply_thread(thread_id):
 		posts = Post.query.filter(Post.thread_id == thread_id)
 		
 		if not form.validate():
-			return render_template("threads/thread.html", thread = thread, posts = posts, form = ReplyThreadForm())
+			return render_template("threads/thread.html", thread = thread, posts = posts, form = PostForm())
 	
 		content = form.content.data
 		# while the last character of the post is a whitespace or a newline, delete it
@@ -68,19 +68,66 @@ def reply_thread(thread_id):
 	except ValueError:
 		return redirect(url_for("error404"))
 
+@app.route("/edit_post/<post_id>/", methods = ["POST"])
+@login_required
+def edit_post(post_id):
+	form = PostForm(request.form)
+	post = Post.query.get(post_id)
+	thread = Thread.query.get(post.thread_id)
+	if not form.validate():
+		return redirect(url_for('get_thread', thread_id = thread.id))
+	
+	content = form.content.data
+	# while the last character of the post is a whitespace or a newline, delete it
+	while content[-1] == ' ' or content[-1] == '\n':
+		content = content[:-1]
+
+	if current_user.is_authenticated:
+		user = User.query.get(current_user.get_id())
+		if user.is_admin() or user.id == post.sender_id:
+			post.content = content
+			db.session().commit()
+
+	return redirect(url_for('get_thread', thread_id = thread.id))
+
+@app.route("/delete_post/<post_id>/")
+@login_required
+def delete_post(post_id):
+	post = Post.query.get(post_id)
+	thread = Thread.query.get(post.thread_id)
+	if current_user.is_authenticated:
+		user = User.query.get(current_user.get_id())
+		if user.is_admin() or user.id == post.sender_id:
+			db.session().delete(post)
+			db.session().commit()
+
+	return redirect(url_for('get_thread', thread_id = thread.id))
+
 @app.route("/thread/<thread_id>/", methods = ["GET"])
 def get_thread(thread_id):
-	try: 
+	try:
 		thread_id = int(thread_id)
 		thread = Thread.query.get(thread_id)
 		
+		thread.deletable = False
+		if current_user.is_authenticated:
+			user = User.query.get(current_user.get_id())
+			if user.is_admin() or user.id == thread.sender_id:
+				thread.deletable = True
+
 		posts = Post.query.filter(Post.thread_id == thread_id)
 		posts = list(posts)
 		for post in posts:
 			post.sender = User.query.get(post.sender_id)
 			post.posted = date_to_string(post.date_created)
 			post.modified = date_to_string(post.date_modified)
-		return render_template("threads/thread.html", thread = thread, posts = posts, form = ReplyThreadForm())		
+
+			post.deletable = False
+			if current_user.is_authenticated:
+				user = User.query.get(current_user.get_id())
+				if user.is_admin() or user.id == post.sender_id:
+					post.deletable = True
+		return render_template("threads/thread.html", thread = thread, posts = posts, form = PostForm())		
 	except ValueError:
 		return redirect(url_for("error404"))
 
