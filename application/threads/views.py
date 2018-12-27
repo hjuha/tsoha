@@ -83,3 +83,23 @@ def get_thread(thread_id):
 		return render_template("threads/thread.html", thread = thread, posts = posts, form = ReplyThreadForm())		
 	except ValueError:
 		return redirect(url_for("error404"))
+
+@app.route("/delete_thread/<thread_id>/", methods = ["GET"])
+def delete_thread(thread_id):
+	try: 
+		thread_id = int(thread_id)
+		thread = Thread.query.get(thread_id)
+
+		if current_user.is_authenticated:
+			user = User.query.get(current_user.get_id())
+			if user.is_admin() or user.id == thread.sender_id:
+				posts = Post.query.filter(Post.thread_id == thread_id)
+				for post in posts:
+					db.session().delete(post)
+					
+				db.session().delete(thread)
+				db.session().commit()
+
+		return redirect(url_for("index"))
+	except ValueError:
+		return redirect(url_for("error404"))

@@ -29,6 +29,7 @@
 			<h2 class="display-4"><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
 			Kirjoittaja: {{ thread.sender.first_name }} {{ thread.sender.surname }}<br>
 			Kirjoitettu: {{ thread.posted }}<br>
+			<a href="{{ url_for('delete_thread', thread_id = thread.id) }}"<button type="button" class="btn btn-danger">Poista</button></a>
 		</div>
 		<hr class="my-4">
 	{% endfor %}
