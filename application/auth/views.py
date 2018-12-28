@@ -43,7 +43,7 @@ def register():
 	password = form.password.data
 	password_confirmation = form.password_confirmation.data;
 
-	if username and email and first_name and surname and password and password == password_confirmation:
+	if form.validate() and password == password_confirmation:
 		user = User(username, first_name, surname, password, False, email)
 
 		db.session().add(user)
@@ -54,6 +54,6 @@ def register():
 		return redirect(url_for("index"))
 	else:
 		if password == password_confirmation:
-			return redirect(url_for("register", form = form))
+			return render_template("auth/register.html", form = form)
 		else:
-			return redirect(url_for("register", form = form, password_error = "Salasanat eivät täsmää"))
+			return render_template("auth/register.html", form = form, password_error = "Salasanat eivät täsmää")
