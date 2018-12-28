@@ -3,7 +3,8 @@
 ## Käyttäjä
 
 * Käyttäjä voi luoda käyttäjätunnuksen
-* Käyttäjä voi kirjautua sisälle käyttäjätunnuksellaan
+* Käyttäjä voi kirjautua sisään käyttäjätunnuksellaan
+* Käyttäjä voi kirjautua ulos käyttäjätunnukseltaan
 
 ## Käyttäjäsivu
 
