@@ -40,4 +40,5 @@
 
 ## Haku
 
-* Käyttäjä voi hakea viestiketjuja ajan, kirjoittajan
+* Käyttäjä voi hakea viestiketjuja sisällön, ajan, kirjoittajan ja kategorian perusteella
+* Käyttäjä voi hakea viestejä sisällön, ajan, kirjoittajan ja kategorian perusteella
