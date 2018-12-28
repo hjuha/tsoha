@@ -27,7 +27,6 @@ def login():
 
 	login_user(user)
 
-	print("Käyttäjä " + user.username + " kirjautui")
 	return redirect(url_for("index"))
 
 @app.route("/register/", methods=["GET", "POST"])
@@ -49,6 +48,8 @@ def register():
 
 		db.session().add(user)
 		db.session().commit()
+
+		login_user(user)
 
 		return redirect(url_for("index"))
 	else:
