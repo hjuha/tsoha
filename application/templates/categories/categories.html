@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<p>
+	<h2 class="display-4">Kategoriat</h2>
+	<ul>
+		{% for category in categories %}
+			<li>
+				<div>	
+					<span class="badge badge-secondary">{{ category.name }}</span>
+					<a href="#" onclick="document.getElementById('edit{{ category.id }}').style.display = 'inline'">Muuta</a>
+					-
+					<a href="{{ url_for('delete_category', category_id = category.id) }}">Poista</a>
+					<form id=edit{{ category.id }} style="display: none;" method="POST" action="{{ url_for('edit_category', category_id = category.id) }}">
+						</p>
+						<div class="form-group">
+							{{ form.name(class_="form-control", placeholder="Uusi nimi") }}
+						</div>
+						<input class="btn btn-primary btn-small" type="submit" value="Muuta">
+					</form>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+
+	<h2>Uusi kategoria</h2>
+
+	<form method="POST" action="{{ url_for('add_category') }}">
+		<div class="form-group">
+			{{ form.name(class_="form-control", placeholder="Nimi") }}
+		</div>
+		</p>
+		<input class="btn btn-primary btn-small" type="submit" value="Luo">
+	</form>
+</p>
+{% endblock %}

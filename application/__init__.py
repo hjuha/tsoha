@@ -50,6 +50,9 @@ from application.auth import models
 from application.threads import views
 from application.threads import models
 
+from application.categories import views
+from application.categories import models
+
 from application.auth.models import User
 
 @login_manager.user_loader
