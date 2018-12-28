@@ -26,6 +26,7 @@
 				</ul>
 				<div class="form-inline mt-2 mt-md-0">
 					{% if current_user.is_authenticated %}
+						<span style="color: white;">Kirjautuneena: {{ current_user.username }}</span>
 						<a class="nav-item active nav-link" href="{{ url_for('logout') }}">Kirjaudu ulos</a>
 					{% else %}
 						<a class="nav-link" href="{{ url_for('login') }}">Kirjaudu sisään</a>
