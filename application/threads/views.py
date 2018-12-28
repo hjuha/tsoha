@@ -50,7 +50,7 @@ def reply_thread(thread_id):
 		posts = Post.query.filter(Post.thread_id == thread_id)
 		
 		if not form.validate():
-			return render_template("threads/thread.html", thread = thread, posts = posts, form = PostForm())
+			return redirect(url_for("get_thread", thread_id = thread_id))
 	
 		content = form.content.data
 		# while the last character of the post is a whitespace or a newline, delete it
