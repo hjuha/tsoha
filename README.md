@@ -10,3 +10,11 @@ Käyttäjä voi muokata kirjoitettuja viestejään ja poistaa ne. Käyttäjä py
 HYGOn hallituksen harkinnan mukaan käyttäjälle voidaan antaa ylläpito-oikeudet, jolloin he voivat tarkastella käyttäjätietoja, muokata käyttäjien oikeuksia ja moderoida keskustelua.
 
 Etusivulla käyttäjä näkee listauksen viestiketjuista aikajärjestyksessä, minkä lisäksi hän voi hakea viestejä ajan, käyttäjän tai kategorian perusteella. Käyttäjälle näytetään listauksessa, onko hän lukenut kaikki viestiketjun viestit.
+
+# Dokumentaatio
+
+## Tietokantakaavio
+Linkki: [Tietokantakaavio](https://github.com/Kalakuh/tsoha/blob/master/documentation/relation_diagram.png)
+
+## Käyttötapaukset
+Linkki: [Käyttötapaukset](https://github.com/Kalakuh/tsoha/blob/master/documentation/use_cases.md)
