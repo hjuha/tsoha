@@ -5,13 +5,19 @@ from application.threads.models import Thread, Post
 from application.threads.forms import ThreadForm, PostForm
 from flask_login import login_required, current_user
 from application.utils.date_format import date_to_string
+from application.categories.models import Category, CategoryThread
 
 @app.route("/thread/new/", methods=["GET", "POST"])
 @login_required
 def post_new_thread():
 	if request.method == "GET":
-		return render_template("threads/new_thread.html", form = ThreadForm())
+		return render_template("threads/new_thread.html", form = ThreadForm(), categories = Category.query.all())
 	
+	categories = []
+	for category in Category.query.all():
+		if request.form.get("category" + str(category.id)):
+			categories.append(category.id)
+
 	form = ThreadForm(request.form)
 	
 	if not form.validate():
@@ -33,6 +39,10 @@ def post_new_thread():
 
 	thread_id = thread.id
 	post = Post(content, sender_id, thread_id)
+
+	for category_id in categories:
+		categorythread = CategoryThread(category_id, thread_id)
+		db.session().add(categorythread)
 
 	db.session().add(post)
 	db.session().commit()

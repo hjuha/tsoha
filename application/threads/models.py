@@ -1,11 +1,13 @@
 from application import db
 from application.models import Base
+from application.categories.models import CategoryThread
 
 class Thread(Base):
 	topic = db.Column(db.String(50), nullable = False)
 	sender_id = db.Column(db.Integer, db.ForeignKey("account.id"), nullable = False)
 
 	posts = db.relationship("Post", backref = "thread", lazy = True)
+	categorythreads = db.relationship("CategoryThread", backref = "thread", lazy = True)
 
 	def __init__(self, topic, sender_id):
 		self.topic = topic
