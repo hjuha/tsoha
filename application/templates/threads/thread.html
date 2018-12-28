@@ -2,86 +2,69 @@
 
 {% block body %}
 <p>
-	<h1>{{ thread.topic }}</h1>
-	
+	<h2 class="display-4">{{ thread.topic }}</h1>
+
 	{% if thread.deletable %}
 		<a href="{{ url_for('delete_thread', thread_id = thread.id) }}"<button type="button" class="btn btn-danger">Poista viestiketju</button></a>
 	{% endif %}
 
 	{% for post in posts %}
-	<div class="post" id="post{{ post.id }}">
-		{{ post.sender.first_name }} {{ post.sender.surname }}
-		<br>
-		{% if post.posted == post.modified %}
-			<small>Julkaistu {{ post.posted }}</small>
-		{% else %}
-			<small>Muokattu {{ post.modified }}</small>
-		{% endif %}
-		
-		<p></p>
-		<pre style="font-size: 16px">{{ post.content }}</pre>
-		{% if post.deletable %}
-			<a href="#" onclick="
-				reply = document.getElementById('reply{{ post.id }}');
-				reply.style.display = 'inline';
-				reply.children[0].children[0].children[0].children[1].children[0].value = `{{ post.content }}`
-			">Muokkaa</a>
-			 | 
-			<a href="{{ url_for('delete_post', post_id = post.id) }}">Poista</a>
-			<form id="reply{{ post.id }}" style="display: none" method="POST" action="{{ url_for('edit_post', post_id = post.id) }}">
-				<table>
-					<tr>
-						<td>
-							{{ form.content.label }}
-						</td>
-						<td>
-							{{ form.content }}
-						</td>
-						<td>
-							<ul>
-								{% for error in form.content.errors %}
-									<li>{{ error }}</li>
-								{% endfor %}
-							</ul>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<input type="submit" value="Muokkaa vastausta">
-						</td>
-					</tr>
-				</table>
-			</form>
-		{% endif %}
-	</div>
-	<hr>
-	{% endfor %}
-	
-	<h2>Vastaa viestiketjuun</h2>
-	{% if current_user.is_authenticated %}
-		<form method="POST" action="{{ url_for('reply_thread', thread_id = thread.id) }}">
-			<table>
-				<tr>
-					<td>
-						{{ form.content.label }}
-					</td>
-					<td>
-						{{ form.content }}
-					</td>
-					<td>
+		<div class="post card" id="post{{ post.id }}">
+			<div class="card-body">
+				<h5 class="card-title">{{ post.sender.first_name }} {{ post.sender.surname }}</h5>
+				
+				<h6 class="card-subtitle mb-2 text-muted">
+				{% if post.posted == post.modified %}
+					<small>Julkaistu {{ post.posted }}</small>
+				{% else %}
+					<small>Muokattu {{ post.modified }}</small>
+				{% endif %}
+				</h6>
+
+				<p class="card-text">
+				<span style="white-space: pre-wrap; font-size: 16px">{{ post.content }}</span>
+				</p>
+				{% if post.deletable %}
+					<a class="card-link" href="#" onclick="
+						reply = document.getElementById('reply{{ post.id }}');
+						reply.style.display = 'inline';
+						reply.children[1].children[0].children[0].value = `{{ post.content }}`
+					">Muokkaa</a>
+					<a class="card-link" href="{{ url_for('delete_post', post_id = post.id) }}">Poista</a>
+					<form id="reply{{ post.id }}" style="display: none" method="POST" action="{{ url_for('edit_post', post_id = post.id) }}">
+						<hr>
+						<div class="form-group">
+							<div class="input-group">
+								{{ form.content(class_="form-control",rows="8",placeholder="Kirjoita viesti tähän") }}
+							</div>
+						</div>
 						<ul>
 							{% for error in form.content.errors %}
 								<li>{{ error }}</li>
 							{% endfor %}
 						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3">
-						<input type="submit" value="Vastaa viestiketjuun">
-					</td>
-				</tr>
-			</table>
+						<input class="btn btn-primary btn-small" type="submit" value="Muokkaa vastausta">
+					</form>
+				{% endif %}
+			</div>
+		</div>
+		</p>
+	{% endfor %}
+	
+	<h2>Vastaa viestiketjuun</h2>
+	{% if current_user.is_authenticated %}
+		<form method="POST" action="{{ url_for('reply_thread', thread_id = thread.id) }}">
+			<div class="form-group">
+				<div class="input-group">
+					{{ form.content(class_="form-control",rows="8",placeholder="Kirjoita viesti tähän") }}
+				</div>
+			</div>
+			<ul>
+			{% for error in form.content.errors %}
+				<li>{{ error }}</li>
+			{% endfor %}
+			</ul>
+			<input class="btn btn-primary btn-small" type="submit" value="Vastaa viestiketjuun">
 		</form>
 	{% else %}
 		Sinun on kirjauduttava sisään vastataksesi viestiketjuun.
