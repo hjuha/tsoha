@@ -7,6 +7,12 @@ from flask_login import login_required, current_user
 from application.utils.date_format import date_to_string
 from application.categories.models import Category, CategoryThread
 
+def trim_end(msg):
+	# remove last character as long as it's whitespace or newline
+	while msg[-1] == ' ' or msg[-1] == '\n':
+		msg = msg[:-1]
+	return msg
+
 @app.route("/thread/new/", methods=["GET", "POST"])
 @login_required
 def post_new_thread():
@@ -24,11 +30,8 @@ def post_new_thread():
 		return render_template("threads/new_thread.html", form = form)
 
 	topic = form.topic.data
-	content = form.content.data
 
-	# while the last character of the post is a whitespace or a newline, delete it
-	while content[-1] == ' ' or content[-1] == '\n':
-		content = content[:-1]
+	content = trim_end(form.content.data)
 
 	sender_id = current_user.id
 
@@ -62,10 +65,7 @@ def reply_thread(thread_id):
 		if not form.validate():
 			return redirect(url_for("get_thread", thread_id = thread_id))
 	
-		content = form.content.data
-		# while the last character of the post is a whitespace or a newline, delete it
-		while content[-1] == ' ' or content[-1] == '\n':
-			content = content[:-1]
+		content = trim_end(form.content.data)
 
 		sender_id = current_user.id
 
@@ -87,10 +87,7 @@ def edit_post(post_id):
 	if not form.validate():
 		return redirect(url_for('get_thread', thread_id = thread.id))
 	
-	content = form.content.data
-	# while the last character of the post is a whitespace or a newline, delete it
-	while content[-1] == ' ' or content[-1] == '\n':
-		content = content[:-1]
+	content = trim_end(form.content.data)
 
 	if current_user.is_authenticated:
 		user = User.query.get(current_user.get_id())
