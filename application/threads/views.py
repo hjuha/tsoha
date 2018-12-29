@@ -147,6 +147,8 @@ def delete_thread(thread_id):
 		if current_user.is_authenticated:
 			user = User.query.get(current_user.get_id())
 			if user.is_admin() or user.id == thread.sender_id:
+				for categorythread in thread.categorythreads:
+					db.session().delete(categorythread)
 				posts = Post.query.filter(Post.thread_id == thread_id)
 				for post in posts:
 					db.session().delete(post)

@@ -1,7 +1,7 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
 from application import admin_required
-from application.categories.models import Category
+from application.categories.models import Category, CategoryThread
 from application.categories.forms import CategoryForm
 
 @app.route("/categories/", methods=["GET"])
@@ -48,5 +48,7 @@ def edit_category(category_id):
 def delete_category(category_id):
 	category = Category.query.get(int(category_id))
 	db.session().delete(category)
+	for categorythread in category.categorythreads:
+					db.session().delete(categorythread)
 	db.session().commit()
 	return redirect(url_for("get_categories"))
