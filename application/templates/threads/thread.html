@@ -32,7 +32,7 @@
 					<a class="card-link" href="#" onclick="
 						reply = document.getElementById('reply{{ post.id }}');
 						reply.style.display = 'inline';
-						reply.children[1].children[0].children[0].value = `{{ post.content }}`
+						reply.children[1].children[0].children[0].value = `{{ post.content|sanitize_for_js }}`
 					">Muokkaa</a>
 					<a class="card-link" href="{{ url_for('delete_post', post_id = post.id) }}">Poista</a>
 					<form id="reply{{ post.id }}" style="display: none" method="POST" action="{{ url_for('edit_post', post_id = post.id) }}">

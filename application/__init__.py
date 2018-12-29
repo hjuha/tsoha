@@ -1,5 +1,18 @@
 from flask import Flask
+
 app = Flask(__name__)
+
+def sanitize_for_js(text):
+	text = text.replace("\\", "\\u005C")
+	text = text.replace("&", "\\u0026")
+	text = text.replace("`", "\\u0060")
+	text = text.replace("<", "\\u003C")
+	text = text.replace(">", "\\u003E")
+	text = text.replace("'", "\\u0027")
+	text = text.replace("\"", "\\u0022")
+	return text
+
+app.jinja_env.filters['sanitize_for_js'] = sanitize_for_js
 
 from flask_sqlalchemy import SQLAlchemy
 
