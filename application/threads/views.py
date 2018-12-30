@@ -124,6 +124,10 @@ def get_thread(thread_id):
 
 		posts = Post.query.filter(Post.thread_id == thread_id)
 		posts = list(posts)
+
+		# sort by date_created
+		posts.sort(key = (lambda post : post.date_created))
+
 		for post in posts:
 			post.sender = User.query.get(post.sender_id)
 			post.posted = date_to_string(post.date_created)
