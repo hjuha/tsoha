@@ -27,7 +27,7 @@ def post_new_thread():
 	form = ThreadForm(request.form)
 	
 	if not form.validate():
-		return render_template("threads/new_thread.html", form = form)
+		return render_template("threads/new_thread.html", form = form, categories = Category.query.all())
 
 	topic = form.topic.data
 
