@@ -59,6 +59,7 @@ from application import views
 
 from application.auth import views
 from application.auth import models
+from application.auth.models import User
 
 from application.threads import views
 from application.threads import models
@@ -66,7 +67,7 @@ from application.threads import models
 from application.categories import views
 from application.categories import models
 
-from application.auth.models import User
+from application.search import views
 
 @login_manager.user_loader
 def load_user(user_id):
