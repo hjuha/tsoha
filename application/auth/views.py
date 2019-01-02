@@ -51,7 +51,7 @@ def register():
 	password = form.password.data
 	password_confirmation = form.password_confirmation.data;
 
-	if form.validate() and password == password_confirmation:
+	if form.validate() and password == password_confirmation and not User.query.filter_by(username = username).first():
 		password = bcrypt.hashpw(base64.b64encode(hashlib.sha256(password.encode('utf-8')).digest()), bcrypt.gensalt())
 
 		user = User(username, first_name, surname, password, False, email)
@@ -63,7 +63,8 @@ def register():
 
 		return redirect(url_for("index"))
 	else:
-		if password == password_confirmation:
-			return render_template("auth/register.html", form = form)
-		else:
-			return render_template("auth/register.html", form = form, password_error = "Salasanat eivät täsmää")
+		if password != password_confirmation:
+			password_error = "Salasanat eivät täsmää"
+		if User.query.filter_by(username = username).first():
+			user_error = "Käyttäjätunnus on jo käytössä"
+		return render_template("auth/register.html", form = form, password_error = password_error, user_error = user_error)

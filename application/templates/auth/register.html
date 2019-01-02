@@ -13,6 +13,10 @@
 				{% endfor %}
 			</ul>
 		</div>
+		{% if user_error|length != 0 %}
+			<span style="color: #cc0000">{{ user_error }}</span>
+			<p>
+		{% endif %}
 		<div class="form-group">
 			<label>{{ form.email.label }}</label>
 			{{ form.email(class_="form-control", placeholder="Sähköposti") }}
