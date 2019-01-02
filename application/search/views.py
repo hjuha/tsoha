@@ -13,12 +13,14 @@ def search():
 	if request.method == "GET":
 		categories = Category.query.all()
 		form = SearchForm()
-		return render_template("search/search.html", categories = categories, form = form, results = [])
+		return render_template("search/search.html", categories = categories, form = form, results = [], type = "None")
 
 	categories = []
 	for category in Category.query.all():
 		if request.form.get("category" + str(category.id)):
 			categories.append(category.id)
+
+	query_type = request.form.get("type")
 
 	form = SearchForm(request.form)
 
@@ -33,18 +35,28 @@ def search():
 		before_date = date.today()
 
 	before_date += timedelta(1)
+	results = []
 
-	results = Thread.search_query(contains, name, after_date, before_date, categories)
+	if query_type == "thread":
+		results = Thread.search_query(contains, name, after_date, before_date, categories)
 
-	for thread in results:
-		thread.sender = User.query.get(thread.sender_id)
-		thread.posted = date_to_string(thread.date_created)
-		thread.deletable = False
-		thread.categories = []
+		for thread in results:
+			thread.sender = User.query.get(thread.sender_id)
+			thread.posted = date_to_string(thread.date_created)
+			thread.deletable = False
+			thread.categories = []
 
-		for categorythread in thread.categorythreads:
-			thread.categories.append(Category.query.get(categorythread.category_id))
+			for categorythread in thread.categorythreads:
+				thread.categories.append(Category.query.get(categorythread.category_id))
+	elif query_type == "post":
+		results = Post.search_query(contains, name, after_date, before_date, categories)
+
+		for post in results:
+			post.sender = User.query.get(post.sender_id)
+			post.posted = date_to_string(post.date_created)
+			post.modified = date_to_string(post.date_modified)
+			post.thread_topic = Thread.query.get(post.thread_id).topic
 
 	results = results[::-1]
 
-	return render_template("search/search.html", categories = Category.query.all(), form = form, results = results)
+	return render_template("search/search.html", categories = Category.query.all(), form = form, results = results, type = query_type)
