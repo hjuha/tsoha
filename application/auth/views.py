@@ -63,8 +63,10 @@ def register():
 
 		return redirect(url_for("index"))
 	else:
+		password_error = ""
 		if password != password_confirmation:
 			password_error = "Salasanat eivät täsmää"
+		user_error = ""
 		if User.query.filter_by(username = username).first():
 			user_error = "Käyttäjätunnus on jo käytössä"
 		return render_template("auth/register.html", form = form, password_error = password_error, user_error = user_error)
