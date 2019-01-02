@@ -41,7 +41,7 @@
 			</ul>
 		</div>
 		<div class="form-group">
-			<label>Kuuluu kategorioihin</label>
+			<label>Kuuluu kategoriaan</label>
 			{% for category in categories %}
 				<div class="form-check">
 					<input class="form-check-input" type="checkbox" value="true" name="category{{ category.id }}">
@@ -66,12 +66,6 @@
 				</p>
 				Kirjoittaja: {{ thread.sender.first_name }} {{ thread.sender.surname }}<br>
 				Kirjoitettu: {{ thread.posted }}<br>
-				{% if thread.deletable %}
-					</p>
-					<a href="{{ url_for('delete_thread', thread_id = thread.id) }}">
-						<button type="button" class="btn btn-danger btn-sm">Poista</button>
-					</a>
-				{% endif %}
 			</div>
 			<hr class="my-4">
 		{% endfor %}

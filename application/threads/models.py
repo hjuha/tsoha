@@ -45,3 +45,23 @@ class Post(Base):
 		self.content = content
 		self.sender_id = sender_id
 		self.thread_id = thread_id
+
+	@staticmethod
+	def search_query(contains, name, after_date, before_date, categories):
+		contains = "%" + contains.lower() + "%"
+		name = "%" + name.lower() + "%"
+		query = "SELECT Post.id as id" \
+				" FROM Post, Account" \
+				" WHERE Account.id = Post.sender_id" \
+				" AND LOWER(Post.content) LIKE :contains" \
+				" AND LOWER(Account.first_name || ' ' || Account.surname) LIKE :name" \
+				" AND Post.date_created <= :before" \
+				" AND Post.date_created >= :after"
+		stmt = text(query).params(contains = contains, name = name, after = after_date, before = before_date)
+		res = db.engine.execute(stmt)
+
+		results = []
+		for row in res:
+			results.append(Post.query.get(row[0]))
+
+		return results
