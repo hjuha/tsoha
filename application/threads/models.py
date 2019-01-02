@@ -17,13 +17,13 @@ class Thread(Base):
 
 	@staticmethod
 	def search_query(contains, name, after_date, before_date, categories):
-		contains = "%" + contains + "%"
-		name = "%" + name + "%"
+		contains = "%" + contains.lower() + "%"
+		name = "%" + name.lower() + "%"
 		query = "SELECT Thread.id as id" \
 				" FROM Thread, Account" \
 				" WHERE Account.id = Thread.sender_id" \
-				" AND Thread.topic LIKE :contains" \
-				" AND Account.first_name || ' ' || Account.surname LIKE :name" \
+				" AND LOWER(Thread.topic) LIKE :contains" \
+				" AND LOWER(Account.first_name || ' ' || Account.surname) LIKE :name" \
 				" AND Thread.date_created <= :before" \
 				" AND Thread.date_created >= :after"
 		stmt = text(query).params(contains = contains, name = name, after = after_date, before = before_date)
