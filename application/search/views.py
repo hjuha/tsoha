@@ -2,7 +2,7 @@ from application import app, db
 from flask import redirect, render_template, request, url_for
 from application.categories.models import Category
 from application.search.forms import SearchForm
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from application.threads.models import Thread, Post
 from application.auth.models import User
 from application.utils.date_format import date_to_string
@@ -26,6 +26,13 @@ def search():
 	name = form.name.data
 	after_date = form.after_date.data
 	before_date = form.before_date.data
+
+	if not after_date:
+		after_date = date(1900, 1, 1)
+	if not before_date:
+		before_date = date.today()
+
+	before_date += timedelta(1)
 
 	results = Thread.search_query(contains, name, after_date, before_date, categories)
 

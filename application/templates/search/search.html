@@ -56,23 +56,27 @@
 	
 	<hr>
 
-	{% for thread in results %}
-		<div class="container">
-			<h2 class="display-4"><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
-			{% for category in thread.categories %}
-				<span class="badge badge-secondary">{{ category.name }}</span> 
-			{% endfor %}
-			</p>
-			Kirjoittaja: {{ thread.sender.first_name }} {{ thread.sender.surname }}<br>
-			Kirjoitettu: {{ thread.posted }}<br>
-			{% if thread.deletable %}
+	{% if results|length > 0 %}
+		{% for thread in results %}
+			<div class="container">
+				<h2 class="display-4"><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
+				{% for category in thread.categories %}
+					<span class="badge badge-secondary">{{ category.name }}</span> 
+				{% endfor %}
 				</p>
-				<a href="{{ url_for('delete_thread', thread_id = thread.id) }}">
-					<button type="button" class="btn btn-danger btn-sm">Poista</button>
-				</a>
-			{% endif %}
-		</div>
-		<hr class="my-4">
-	{% endfor %}
+				Kirjoittaja: {{ thread.sender.first_name }} {{ thread.sender.surname }}<br>
+				Kirjoitettu: {{ thread.posted }}<br>
+				{% if thread.deletable %}
+					</p>
+					<a href="{{ url_for('delete_thread', thread_id = thread.id) }}">
+						<button type="button" class="btn btn-danger btn-sm">Poista</button>
+					</a>
+				{% endif %}
+			</div>
+			<hr class="my-4">
+		{% endfor %}
+	{% else %}
+		<h2 class="display-4">Ei tuloksia.</h2>
+	{% endif %}
 </p>
 {% endblock %}

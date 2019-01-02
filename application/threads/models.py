@@ -23,8 +23,10 @@ class Thread(Base):
 				" FROM Thread, Account" \
 				" WHERE Account.id = Thread.sender_id" \
 				" AND Thread.topic LIKE :contains" \
-				" AND Account.first_name || ' ' || Account.surname LIKE :name"
-		stmt = text(query).params(contains = contains, name = name)
+				" AND Account.first_name || ' ' || Account.surname LIKE :name" \
+				" AND Thread.date_created <= :before" \
+				" AND Thread.date_created >= :after"
+		stmt = text(query).params(contains = contains, name = name, after = after_date, before = before_date)
 		res = db.engine.execute(stmt)
 
 		results = []
