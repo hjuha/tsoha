@@ -29,6 +29,8 @@ def login():
 		return render_template("auth/login.html", form = form, error = "Virheellinen käyttäjänimi tai salasana")
 
 	password = bcrypt.hashpw(base64.b64encode(hashlib.sha256(password.encode('utf-8')).digest()), user.password)
+	if password[0:2] == '\\x':
+			password = bytes.fromhex(password).decode('utf-8')
 
 	if user.password != password:
 		return render_template("auth/login.html", form = form, error = "Virheellinen käyttäjänimi tai salasana")
@@ -53,7 +55,8 @@ def register():
 
 	if form.validate() and password == password_confirmation and not User.query.filter_by(username = username).first():
 		password = bcrypt.hashpw(base64.b64encode(hashlib.sha256(password.encode('utf-8')).digest()), bcrypt.gensalt())
-
+		if password[0:2] == '\\x':
+			password = bytes.fromhex(password).decode('utf-8')
 		user = User(username, first_name, surname, password, False, email)
 
 		db.session().add(user)
