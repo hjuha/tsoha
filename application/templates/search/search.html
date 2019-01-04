@@ -4,161 +4,166 @@
 <p>
 	<h2 class="display-4">Haku</h2>
 	<form method="POST" action="{{ url_for('search') }}">
-		<div class="form-group">
-			<label>{{ form.contains.label }}</label>
-			{{ form.contains(class_="form-control", placeholder="Sisältää") }}
-			<ul>
-				{% for error in form.contains.errors %}
-					<li>{{ error }}</li>
-				{% endfor %}
-			</ul>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label>{{ form.contains.label }}</label>
+					{{ form.contains(class_="form-control", placeholder="Sisältää") }}
+					<ul>
+						{% for error in form.contains.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+
+				<div class="form-group">
+					<label>{{ form.name.label }}</label>
+					{{ form.name(class_="form-control", placeholder="Nimi") }}
+					<ul>
+						{% for error in form.name.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+
+				<div class="form-group">
+					<label>{{ form.after_date.label }}</label>
+					{{ form.after_date(class_="form-control", placeholder="pp.kk.yyyy") }}
+					<ul>
+						{% for error in form.after_date.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+
+				<div class="form-group">
+					<label>{{ form.before_date.label }}</label>
+					{{ form.before_date(class_="form-control", placeholder="pp.kk.yyyy") }}
+					<ul>
+						{% for error in form.before_date.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<!-- WTForms adds <li> tags to RadioField, so we will use raw HTML instead -->
+				{% if type != "post" %}
+					<div class="form-group">
+						<label>Hae</label>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="type" value="thread" checked>
+							<label class="form-check-label">
+								viestiketjua
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="type" value="post">
+							<label class="form-check-label">
+								viestiä
+							</label>
+						</div>
+					</div>
+				{% else %}
+					<div class="form-group">
+						<label>Hae</label>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="type" value="thread">
+							<label class="form-check-label">
+								viestiketjua
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="type" value="post" checked>
+							<label class="form-check-label">
+								viestiä
+							</label>
+						</div>
+					</div>
+				{% endif %}
+				
+				{% if ordering == "date" %}
+					<div class="form-group">
+						<label>Järjestysperuste</label>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="ordering" value="date" checked>
+							<label class="form-check-label">
+								päivämäärä
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="ordering" value="posts">
+							<label class="form-check-label">
+								vastausten määrä
+							</label>
+						</div>
+					</div>
+				{% else %}
+					<div class="form-group">
+						<label>Järjestysperuste</label>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="ordering" value="date">
+							<label class="form-check-label">
+								päivämäärä
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="ordering" value="posts" checked>
+							<label class="form-check-label">
+								vastausten määrä
+							</label>
+						</div>
+					</div>
+				{% endif %}
+
+				{% if ascending != "true" %}
+					<div class="form-group">
+						<label>Järjestä</label>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="ascending" value="false" checked>
+							<label class="form-check-label">
+								laskevaan järjestykseen
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="ascending" value="true">
+							<label class="form-check-label">
+								kasvavaan järjestykseen
+							</label>
+						</div>
+					</div>
+				{% else %}
+					<div class="form-group">
+						<label>Järjestä</label>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="ascending" value="false">
+							<label class="form-check-label">
+								laskevaan järjestykseen
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="ascending" value="true" checked>
+							<label class="form-check-label">
+								kasvavaan järjestykseen
+							</label>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label>Kuuluu kategoriaan</label>
+					{% for category in categories %}
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="true" name="category{{ category.id }}">
+							<label class="form-check-label">
+								<span class="badge badge-secondary">{{ category.name }}</span>
+							</label>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
 		</div>
-
-		<div class="form-group">
-			<label>{{ form.name.label }}</label>
-			{{ form.name(class_="form-control", placeholder="Nimi") }}
-			<ul>
-				{% for error in form.name.errors %}
-					<li>{{ error }}</li>
-				{% endfor %}
-			</ul>
-		</div>
-
-		<div class="form-group">
-			<label>{{ form.after_date.label }}</label>
-			{{ form.after_date(class_="form-control", placeholder="pp.kk.yyyy") }}
-			<ul>
-				{% for error in form.after_date.errors %}
-					<li>{{ error }}</li>
-				{% endfor %}
-			</ul>
-		</div>
-
-		<div class="form-group">
-			<label>{{ form.before_date.label }}</label>
-			{{ form.before_date(class_="form-control", placeholder="pp.kk.yyyy") }}
-			<ul>
-				{% for error in form.before_date.errors %}
-					<li>{{ error }}</li>
-				{% endfor %}
-			</ul>
-		</div>
-
-		<!-- WTForms adds <li> tags to RadioField, so we will use raw HTML instead -->
-		{% if type != "post" %}
-			<div class="form-group">
-				<label>Hae</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="type" value="thread" checked>
-					<label class="form-check-label">
-						viestiketjua
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="type" value="post">
-					<label class="form-check-label">
-						viestiä
-					</label>
-				</div>
-			</div>
-		{% else %}
-			<div class="form-group">
-				<label>Hae</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="type" value="thread">
-					<label class="form-check-label">
-						viestiketjua
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="type" value="post" checked>
-					<label class="form-check-label">
-						viestiä
-					</label>
-				</div>
-			</div>
-		{% endif %}
-
-		<div class="form-group">
-			<label>Kuuluu kategoriaan</label>
-			{% for category in categories %}
-				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="true" name="category{{ category.id }}">
-					<label class="form-check-label">
-						<span class="badge badge-secondary">{{ category.name }}</span>
-					</label>
-				</div>
-			{% endfor %}
-		</div>
-		
-		{% if ordering == "date" %}
-			<div class="form-group">
-				<label>Järjestysperuste</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="ordering" value="date" checked>
-					<label class="form-check-label">
-						päivämäärä
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="ordering" value="posts">
-					<label class="form-check-label">
-						vastausten määrä
-					</label>
-				</div>
-			</div>
-		{% else %}
-			<div class="form-group">
-				<label>Järjestysperuste</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="ordering" value="date">
-					<label class="form-check-label">
-						päivämäärä
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="ordering" value="posts" checked>
-					<label class="form-check-label">
-						vastausten määrä
-					</label>
-				</div>
-			</div>
-		{% endif %}
-
-		{% if ascending != "true" %}
-			<div class="form-group">
-				<label>Järjestä</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="ascending" value="false" checked>
-					<label class="form-check-label">
-						laskevaan järjestykseen
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="ascending" value="true">
-					<label class="form-check-label">
-						kasvavaan järjestykseen
-					</label>
-				</div>
-			</div>
-		{% else %}
-			<div class="form-group">
-				<label>Järjestä</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="ascending" value="false">
-					<label class="form-check-label">
-						laskevaan järjestykseen
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="ascending" value="true" checked>
-					<label class="form-check-label">
-						kasvavaan järjestykseen
-					</label>
-				</div>
-			</div>
-		{% endif %}
-
 		<input class="btn btn-primary btn-small" type="submit" value="Hae viestejä">
 	</form>
 	
