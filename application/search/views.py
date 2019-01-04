@@ -42,7 +42,7 @@ def search():
 	if query_type == "thread":
 		results = Thread.search_query(contains, name, after_date, before_date, categories, ordering, ascending)
 	elif query_type == "post":
-		results = Post.search_query(contains, name, after_date, before_date, categories)
+		results = Post.search_query(contains, name, after_date, before_date, categories, ordering, ascending)
 
 	results = results[::-1]
 

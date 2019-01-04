@@ -98,7 +98,7 @@ class Post(ThreadBase):
 		self.thread_id = thread_id
 
 	@staticmethod
-	def search_query(contains, name, after_date, before_date, categories):
+	def search_query(contains, name, after_date, before_date, categories, ordering, ascending):
 		contains = "%" + contains.lower() + "%"
 		name = "%" + name.lower() + "%"
 		query = "SELECT Post.id as id" \
@@ -108,6 +108,14 @@ class Post(ThreadBase):
 				" AND LOWER(Account.first_name || ' ' || Account.surname) LIKE :name" \
 				" AND Post.date_created <= :before" \
 				" AND Post.date_created >= :after"
+		
+		query += " ORDER BY Post.date_created"
+
+		if ascending != "true":
+			query += " ASC"
+		else:
+			query += " DESC"
+
 		stmt = text(query).params(contains = contains, name = name, after = after_date, before = before_date)
 		res = db.engine.execute(stmt)
 
