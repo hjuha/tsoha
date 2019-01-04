@@ -27,13 +27,14 @@
 	{% for thread in threads %}
 		<div class="container">
 			<h2 class="display-4"><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
-			{% for category in thread.categories %}
+			{% for category in thread.get_categories() %}
 				<span class="badge badge-secondary">{{ category.name }}</span> 
 			{% endfor %}
 			</p>
-			Kirjoittaja: {{ thread.sender.first_name }} {{ thread.sender.surname }}<br>
-			Kirjoitettu: {{ thread.posted }}<br>
-			{% if thread.deletable %}
+			Kirjoittaja: {{ thread.get_sender().first_name }} {{ thread.get_sender().surname }}<br>
+			Kirjoitettu {{ thread.get_created() }}<br>
+			Vastauksia: {{ thread.get_number_of_replies() }}
+			{% if thread.is_deletable() %}
 				</p>
 				<a href="{{ url_for('delete_thread', thread_id = thread.id) }}">
 					<button type="button" class="btn btn-danger btn-sm">Poista</button>

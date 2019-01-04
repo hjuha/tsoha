@@ -39,23 +39,8 @@ def search():
 
 	if query_type == "thread":
 		results = Thread.search_query(contains, name, after_date, before_date, categories)
-
-		for thread in results:
-			thread.sender = User.query.get(thread.sender_id)
-			thread.posted = date_to_string(thread.date_created)
-			thread.deletable = False
-			thread.categories = []
-
-			for categorythread in thread.categorythreads:
-				thread.categories.append(Category.query.get(categorythread.category_id))
 	elif query_type == "post":
 		results = Post.search_query(contains, name, after_date, before_date, categories)
-
-		for post in results:
-			post.sender = User.query.get(post.sender_id)
-			post.posted = date_to_string(post.date_created)
-			post.modified = date_to_string(post.date_modified)
-			post.thread_topic = Thread.query.get(post.thread_id).topic
 
 	results = results[::-1]
 
