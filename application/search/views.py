@@ -13,7 +13,7 @@ def search():
 	if request.method == "GET":
 		categories = Category.query.all()
 		form = SearchForm()
-		return render_template("search/search.html", categories = categories, form = form, results = [], type = "None")
+		return render_template("search/search.html", categories = categories, form = form, results = [], type = "None", ascending = "false", ordering = "date")
 
 	categories = []
 	for category in Category.query.all():
@@ -21,6 +21,8 @@ def search():
 			categories.append(category.id)
 
 	query_type = request.form.get("type")
+	ordering = request.form.get("ordering")
+	ascending = request.form.get("ascending")
 
 	form = SearchForm(request.form)
 
@@ -38,10 +40,10 @@ def search():
 	results = []
 
 	if query_type == "thread":
-		results = Thread.search_query(contains, name, after_date, before_date, categories)
+		results = Thread.search_query(contains, name, after_date, before_date, categories, ordering, ascending)
 	elif query_type == "post":
 		results = Post.search_query(contains, name, after_date, before_date, categories)
 
 	results = results[::-1]
 
-	return render_template("search/search.html", categories = Category.query.all(), form = form, results = results, type = query_type)
+	return render_template("search/search.html", categories = Category.query.all(), form = form, results = results, type = query_type, ascending = ascending, ordering = ordering)

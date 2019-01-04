@@ -90,6 +90,75 @@
 				</div>
 			{% endfor %}
 		</div>
+		
+		{% if ordering == "date" %}
+			<div class="form-group">
+				<label>Järjestysperuste</label>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="ordering" value="date" checked>
+					<label class="form-check-label">
+						päivämäärä
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="ordering" value="posts">
+					<label class="form-check-label">
+						vastausten määrä
+					</label>
+				</div>
+			</div>
+		{% else %}
+			<div class="form-group">
+				<label>Järjestysperuste</label>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="ordering" value="date">
+					<label class="form-check-label">
+						päivämäärä
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="ordering" value="posts" checked>
+					<label class="form-check-label">
+						vastausten määrä
+					</label>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if ascending != "true" %}
+			<div class="form-group">
+				<label>Järjestä</label>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="ascending" value="false" checked>
+					<label class="form-check-label">
+						laskevaan järjestykseen
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="ascending" value="true">
+					<label class="form-check-label">
+						kasvavaan järjestykseen
+					</label>
+				</div>
+			</div>
+		{% else %}
+			<div class="form-group">
+				<label>Järjestä</label>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="ascending" value="false">
+					<label class="form-check-label">
+						laskevaan järjestykseen
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="ascending" value="true" checked>
+					<label class="form-check-label">
+						kasvavaan järjestykseen
+					</label>
+				</div>
+			</div>
+		{% endif %}
+
 		<input class="btn btn-primary btn-small" type="submit" value="Hae viestejä">
 	</form>
 	

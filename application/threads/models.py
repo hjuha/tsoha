@@ -32,7 +32,7 @@ class Thread(ThreadBase):
 		self.sender_id = sender_id
 
 	@staticmethod
-	def search_query(contains, name, after_date, before_date, categories, order = "posts"):
+	def search_query(contains, name, after_date, before_date, categories, ordering, ascending):
 		contains = "%" + contains.lower() + "%"
 		name = "%" + name.lower() + "%"
 		query = "SELECT Thread.id as id" \
@@ -43,11 +43,21 @@ class Thread(ThreadBase):
 				" AND Thread.date_created <= :before" \
 				" AND Thread.date_created >= :after"
 
-		if order == "posts":
+		if ordering == "posts":
 			query = query.replace("FROM", "FROM Post,")
 			query += " AND Post.thread_id = Thread.id" \
 					 " GROUP BY Thread.id" \
 					 " ORDER BY COUNT(*)"
+		elif ordering == "date":
+			query += " ORDER BY Thread.date_created"
+		else:
+			query += " ORDER BY Thread.date_created"
+
+		if ascending != "true":
+			query += " ASC"
+		else:
+			query += " DESC"
+
 		print(query)
 
 		stmt = text(query).params(contains = contains, name = name, after = after_date, before = before_date)
