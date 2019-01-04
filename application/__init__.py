@@ -70,6 +70,8 @@ from application.categories import models
 
 from application.search import views
 
+from application.profiles import views
+
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(user_id)

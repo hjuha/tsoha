@@ -18,11 +18,13 @@
 						<a class="nav-link" href="{{ url_for('index') }}">Etusivu</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Profiili</a>
-					</li>
-					<li class="nav-item">
 						<a class="nav-link" href="{{ url_for('search') }}">Haku</a>
 					</li>
+					{% if current_user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('get_profile', user_id = current_user.id )}}">Profiili</a>
+						</li>
+					{% endif %}
 					{% if current_user.is_authenticated %}
 						{% if current_user.admin %}
 							<li class="nav-item">
