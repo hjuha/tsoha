@@ -32,7 +32,7 @@ class Thread(ThreadBase):
 		self.sender_id = sender_id
 
 	@staticmethod
-	def search_query(contains, name, after_date, before_date, categories):
+	def search_query(contains, name, after_date, before_date, categories, order = "posts"):
 		contains = "%" + contains.lower() + "%"
 		name = "%" + name.lower() + "%"
 		query = "SELECT Thread.id as id" \
@@ -42,6 +42,14 @@ class Thread(ThreadBase):
 				" AND LOWER(Account.first_name || ' ' || Account.surname) LIKE :name" \
 				" AND Thread.date_created <= :before" \
 				" AND Thread.date_created >= :after"
+
+		if order == "posts":
+			query = query.replace("FROM", "FROM Post,")
+			query += " AND Post.thread_id = Thread.id" \
+					 " GROUP BY Thread.id" \
+					 " ORDER BY COUNT(*)"
+		print(query)
+
 		stmt = text(query).params(contains = contains, name = name, after = after_date, before = before_date)
 		res = db.engine.execute(stmt)
 
