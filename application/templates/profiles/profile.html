@@ -3,7 +3,14 @@
 {% block body %}
 <p>
 	<h2 class="display-4">{{ user.first_name }} {{ user.surname }}</h2>
-
+	{% if current_user.admin %}
+		{% if not user.admin %}
+			<a class="btn btn-primary" href="{{ url_for('promote', user_id = user.id) }}" role="button">Ylennä ylläpitäjäksi</a>
+		{% else %}
+			<a class="btn btn-primary" href="{{ url_for('demote', user_id = user.id) }}" role="button">Poista ylläpitäjyys</a>
+		{% endif %}
+		</p>
+	{% endif %}
 	<table>
 		<tr>
 			<td>

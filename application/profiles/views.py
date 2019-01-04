@@ -14,4 +14,15 @@ def get_profile(user_id):
 @app.route("/promote/<user_id>/", methods = ["GET"])
 @admin_required
 def promote(user_id):
+	user = User.query.get(user_id)
+	user.admin = True
+	db.session().commit()
+	return redirect(url_for("get_profile", user_id = user_id))
+
+@app.route("/demote/<user_id>/", methods = ["GET"])
+@admin_required
+def demote(user_id):
+	user = User.query.get(user_id)
+	user.admin = False
+	db.session().commit()
 	return redirect(url_for("get_profile", user_id = user_id))
