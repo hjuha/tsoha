@@ -7,6 +7,8 @@ from application.threads.models import Thread, Post
 @app.route("/profile/<user_id>/", methods = ["GET"])
 def get_profile(user_id):
 	user = User.query.get(user_id)
+	if not user:
+		return redirect(url_for('error404'))
 	return render_template("profiles/profile.html", user = user)
 
 @app.route("/promote/<user_id>/", methods = ["GET"])

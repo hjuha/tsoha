@@ -1,5 +1,7 @@
 from application import db
 from application.models import Base
+import application.threads as threads
+from sqlalchemy.sql import text
 
 class User(Base):
 	__tablename__ = "account"
@@ -37,3 +39,41 @@ class User(Base):
 
 	def is_admin(self):
 		return self.admin
+
+	@staticmethod
+	def latest_threads(user_id):
+		query = "SELECT Thread.id as id" \
+				" FROM Thread" \
+				" WHERE Thread.sender_id = :id" \
+				" ORDER BY Thread.date_created DESC" \
+				" LIMIT 10"
+		stmt = text(query).params(id = user_id)
+		res = db.engine.execute(stmt)
+
+		results = []
+		for row in res:
+			results.append(threads.models.Thread.query.get(row[0]))
+
+		return results
+
+	def get_latest_threads(self):
+		return User.latest_threads(self.id)
+
+	@staticmethod
+	def latest_posts(user_id):
+		query = "SELECT Post.id as id" \
+				" FROM Post" \
+				" WHERE Post.sender_id = :id" \
+				" ORDER BY Post.date_created DESC" \
+				" LIMIT 10"
+		stmt = text(query).params(id = user_id)
+		res = db.engine.execute(stmt)
+
+		results = []
+		for row in res:
+			results.append(threads.models.Post.query.get(row[0]))
+
+		return results
+
+	def get_latest_posts(self):
+		return User.latest_posts(self.id)

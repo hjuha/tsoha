@@ -3,5 +3,97 @@
 {% block body %}
 <p>
 	<h2 class="display-4">{{ user.first_name }} {{ user.surname }}</h2>
+
+	<table>
+		<tr>
+			<td>
+				<b>Tunnus luotu:</b>
+			</td>
+			<td>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</td>
+			<td>
+				{{ user.get_created() }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Viestiketjuja luotu:</b>
+			</td>
+			<td>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</td>
+			<td>
+				{{ user.threads|length }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Viestejä lähetetty:</b> 
+			</td>
+			<td>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</td>
+			<td>
+				{{ user.posts|length }}
+			</td>
+		</tr>
+	</table>
+
+	</p>
+
+	<h2>Viimeisimmät viestiketjut</h2>
+
+	<table class="table">
+		<tr>
+			<td>
+				<b>Aihe</b>
+			</td>
+			<td>
+				<b>Ajankohta</b>
+			</td>
+		</tr>
+		{% for thread in user.get_latest_threads() %}
+			<tr>
+				<td>
+					<a href="{{ url_for('get_thread', thread_id = thread.id ) }}">{{ thread.topic|truncate(32) }}</a>
+				</td>
+				<td>
+					{{ thread.get_created() }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+	</p>
+
+	<h2>Viimeisimmät viestit</h2>
+
+	<table class="table">
+		<tr>
+			<td>
+				<b>Viesti</b>
+			</td>
+			<td>
+				<b>Aihe</b>
+			</td>
+			<td>
+				<b>Ajankohta</b>
+			</td>
+		</tr>
+		{% for post in user.get_latest_posts() %}
+			<tr>
+				<td>
+					{{ post.content|truncate(50) }}
+				</td>
+				<td>
+					<a href="{{ url_for('get_thread', thread_id = post.thread_id) }}">{{ post.get_topic()|truncate(32) }}</a>
+				</td>
+				<td>
+					{{ post.get_created() }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
 </p>
 {% endblock %}

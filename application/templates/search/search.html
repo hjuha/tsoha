@@ -104,7 +104,7 @@
 						<span class="badge badge-secondary">{{ category.name }}</span> 
 					{% endfor %}
 					</p>
-					Kirjoittaja: {{ thread.get_sender().first_name }} {{ thread.get_sender().surname }}<br>
+					Kirjoittaja: <a href="{{ url_for('get_profile', user_id = thread.sender_id) }}">{{ thread.get_sender().first_name }} {{ thread.get_sender().surname }}</a><br>
 					Kirjoitettu {{ thread.get_created() }}<br>
 					Vastauksia: {{ thread.get_number_of_replies() }}
 				</div>
@@ -128,7 +128,7 @@
 							</small>
 						</h6>
 						<hr>
-						<h5 class="card-title">{{ post.get_sender().first_name }} {{ post.get_sender().surname }}</h5>
+						<h5 class="card-title"><a href="{{ url_for('get_profile', user_id = post.sender_id) }}">{{ post.get_sender().first_name }} {{ post.get_sender().surname }}</a></h5>
 						
 						<h6 class="card-subtitle mb-2 text-muted">
 						{% if post.date_created == post.date_modified %}

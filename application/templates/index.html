@@ -31,7 +31,7 @@
 				<span class="badge badge-secondary">{{ category.name }}</span> 
 			{% endfor %}
 			</p>
-			Kirjoittaja: {{ thread.get_sender().first_name }} {{ thread.get_sender().surname }}<br>
+			Kirjoittaja: <a href="{{ url_for('get_profile', user_id = thread.sender_id) }}">{{ thread.get_sender().first_name }} {{ thread.get_sender().surname }}</a><br>
 			Kirjoitettu {{ thread.get_created() }}<br>
 			Vastauksia: {{ thread.get_number_of_replies() }}
 			{% if thread.is_deletable() %}

@@ -1,7 +1,7 @@
 from application import db
 from application.models import Base
 from application.categories.models import Category, CategoryThread
-from application.auth.models import User
+import application.auth as auth
 from flask_login import current_user
 
 from sqlalchemy.sql import text
@@ -15,7 +15,7 @@ class ThreadBase(Base):
 		return db.Column(db.Integer, db.ForeignKey("account.id"), nullable = False)
 
 	def get_sender(self):
-		return User.query.get(self.sender_id)
+		return auth.models.User.query.get(self.sender_id)
 
 	def is_deletable(self):
 		return current_user.is_authenticated and (self.sender_id == current_user.get_id() or current_user.admin)
@@ -54,7 +54,7 @@ class Thread(ThreadBase):
 	@staticmethod
 	def number_of_replies(thread_id):
 		query = "SELECT COUNT(DISTINCT Post.id)" \
-				" FROM Thread, Post" \
+				" FROM Post" \
 				" WHERE Post.thread_id = :id"
 		stmt = text(query).params(id = thread_id)
 		res = db.engine.execute(stmt)

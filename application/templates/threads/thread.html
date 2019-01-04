@@ -15,7 +15,7 @@
 	{% for post in thread.posts %}
 		<div class="post card" id="post{{ post.id }}">
 			<div class="card-body">
-				<h5 class="card-title">{{ post.get_sender().first_name }} {{ post.get_sender().surname }}</h5>
+				<h5 class="card-title"><a href="{{ url_for('get_profile', user_id = post.sender_id) }}">{{ post.get_sender().first_name }} {{ post.get_sender().surname }}</a></h5>
 				
 				<h6 class="card-subtitle mb-2 text-muted">
 				{% if post.date_created == post.date_modified %}
