@@ -32,35 +32,43 @@ class Thread(ThreadBase):
 		self.sender_id = sender_id
 
 	@staticmethod
-	def search_query(contains, name, after_date, before_date, categories, ordering, ascending):
+	def search_query(contains, name, after_date, before_date, ordering, ascending, category_id):
 		contains = "%" + contains.lower() + "%"
 		name = "%" + name.lower() + "%"
-		query = "SELECT Thread.id as id" \
-				" FROM Thread, Account" \
-				" WHERE Account.id = Thread.sender_id" \
-				" AND LOWER(Thread.topic) LIKE :contains" \
-				" AND LOWER(Account.first_name || ' ' || Account.surname) LIKE :name" \
-				" AND Thread.date_created <= :before" \
-				" AND Thread.date_created >= :after"
+		select = "SELECT Thread.id as id FROM Thread" \
+			     " LEFT JOIN Account ON Account.id = Thread.sender_id"
+		
+		filters = " WHERE LOWER(Thread.topic) LIKE :contains" \
+				  " AND LOWER(Account.first_name || ' ' || Account.surname) LIKE :name" \
+				  " AND Thread.date_created <= :before" \
+				  " AND Thread.date_created >= :after"
+
+		category_id = int(category_id)
+		if category_id:
+			select += " LEFT JOIN Category_Thread ON Category_Thread.category_id = :cid"
+			filters += " AND Thread.id = Category_Thread.thread_id"
 
 		if ordering == "posts":
-			query = query.replace("FROM", "FROM Post,")
-			query += " AND Post.thread_id = Thread.id" \
-					 " GROUP BY Thread.id" \
-					 " ORDER BY COUNT(*)"
+			select += " LEFT JOIN Post ON Post.thread_id = Thread.id"
+			
+			filters += " GROUP BY Thread.id" \
+					   " ORDER BY COUNT(*)"
 		elif ordering == "date":
-			query += " ORDER BY Thread.date_created"
+			filters += " ORDER BY Thread.date_created"
 		else:
-			query += " ORDER BY Thread.date_created"
+			filters += " ORDER BY Thread.date_created"
 
 		if ascending != "true":
-			query += " ASC"
+			filters += " ASC"
 		else:
-			query += " DESC"
+			filters += " DESC"
 
-		print(query)
-
-		stmt = text(query).params(contains = contains, name = name, after = after_date, before = before_date)
+		stmt = text(select + filters)
+		if category_id:
+			stmt = stmt.params(contains = contains, name = name, after = after_date, before = before_date, cid = category_id)
+		else:
+			stmt = stmt.params(contains = contains, name = name, after = after_date, before = before_date)
+			
 		res = db.engine.execute(stmt)
 
 		results = []
@@ -98,7 +106,7 @@ class Post(ThreadBase):
 		self.thread_id = thread_id
 
 	@staticmethod
-	def search_query(contains, name, after_date, before_date, categories, ordering, ascending):
+	def search_query(contains, name, after_date, before_date, ordering, ascending, category_id):
 		contains = "%" + contains.lower() + "%"
 		name = "%" + name.lower() + "%"
 		query = "SELECT Post.id as id" \

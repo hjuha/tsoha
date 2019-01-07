@@ -13,13 +13,9 @@ def search():
 	if request.method == "GET":
 		categories = Category.query.all()
 		form = SearchForm()
-		return render_template("search/search.html", categories = categories, form = form, results = [], type = "None", ascending = "false", ordering = "date")
+		return render_template("search/search.html", categories = categories, form = form, results = [], type = "None", ascending = "false", ordering = "date", category_id = 0)
 
-	categories = []
-	for category in Category.query.all():
-		if request.form.get("category" + str(category.id)):
-			categories.append(category.id)
-
+	category_id = request.form.get("category_id")
 	query_type = request.form.get("type")
 	ordering = request.form.get("ordering")
 	ascending = request.form.get("ascending")
@@ -40,10 +36,10 @@ def search():
 	results = []
 
 	if query_type == "thread":
-		results = Thread.search_query(contains, name, after_date, before_date, categories, ordering, ascending)
+		results = Thread.search_query(contains, name, after_date, before_date, ordering, ascending, category_id)
 	elif query_type == "post":
-		results = Post.search_query(contains, name, after_date, before_date, categories, ordering, ascending)
+		results = Post.search_query(contains, name, after_date, before_date, ordering, ascending, category_id)
 
 	results = results[::-1]
 
-	return render_template("search/search.html", categories = Category.query.all(), form = form, results = results, type = query_type, ascending = ascending, ordering = ordering)
+	return render_template("search/search.html", categories = Category.query.all(), form = form, results = results, type = query_type, ascending = ascending, ordering = ordering, category_id = int(category_id))
