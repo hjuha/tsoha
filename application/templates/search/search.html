@@ -170,9 +170,26 @@
 				</div>
 			</div>
 		</div>
-		<input class="btn btn-primary btn-small" type="submit" value="Hae viestejä">
+		<button class="btn btn-primary btn-small" type="submit" name="page_id" value="1">Hae viestejä</button>
+		{% if last_page_id != 1 %}
+			<hr>
+			<div class="float-left">
+				{% if page_id != 1 %}
+					<button class="btn btn-primary" type="submit" name="page_id" value="1" role="button">Uusimmat</button>
+					<button class="btn btn-primary" type="submit" name="page_id" value="{{ page_id - 1 }}" role="button">Uudemmat</button>
+				{% endif %}
+			</div>
+			<div class="float-right">
+				{% if page_id != last_page_id %}
+					<button class="btn btn-primary" type="submit" name="page_id" value="{{ page_id + 1}}" role="button">Vanhemmat</button>
+					<button class="btn btn-primary" type="submit" name="page_id" value="{{ last_page_id }}" role="button">Vanhimmat</button>
+				{% endif %}
+			</div>
+
+			<br style="line-height: 230%">
+		{% endif %}
 	</form>
-	
+
 	<hr>
 
 	{% if type == "thread" %}

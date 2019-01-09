@@ -27,14 +27,14 @@
 	{% if last_page_id != 1 %}
 		<div class="float-left">
 			{% if page_id != 1 %}
-				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = 1) }}" role="button">Uusimmat viestit</a>
-				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = page_id - 1) }}" role="button">Uudemmat viestit</a>
+				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = 1) }}" role="button">Uusimmat</a>
+				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = page_id - 1) }}" role="button">Uudemmat</a>
 			{% endif %}
 		</div>
 		<div class="float-right">
 			{% if page_id != last_page_id %}
-				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = page_id + 1) }}" role="button">Vanhemmat viestit</a>
-				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = last_page_id) }}" role="button">Vanhimmat viestit</a>
+				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = page_id + 1) }}" role="button">Vanhemmat</a>
+				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = last_page_id) }}" role="button">Vanhimmat</a>
 			{% endif %}
 		</div>
 

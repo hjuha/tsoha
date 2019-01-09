@@ -12,21 +12,11 @@ THREADS_PER_PAGE = 10
 
 @app.route("/", methods=["GET"])
 def index():
-	threads = Thread.query.all()
-	threads = threads[::-1]
-
-	page_id = 1
-	last_page_id = len(threads) // THREADS_PER_PAGE
-	if len(threads) % THREADS_PER_PAGE != 0:
-		last_page_id += 1
-
-	display_threads = threads[0:THREADS_PER_PAGE]
-
-	return render_template("index.html", threads = display_threads, page_id = page_id, last_page_id = last_page_id)
+	return redirect(url_for("index_by_page_id", page_id = 1))
 
 @app.route("/<page_id>/", methods=["GET"])
 def index_by_page_id(page_id):
-	page_id = int(page_id)
+	page_id = max(int(page_id), 1)
 	begin = (page_id - 1) * THREADS_PER_PAGE
 	end = page_id * THREADS_PER_PAGE
 
