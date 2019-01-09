@@ -32,11 +32,6 @@ def index_by_page_id(page_id):
 
 	return render_template("index.html", threads = display_threads, page_id = page_id, last_page_id = last_page_id, active = User.active_users(), user_count = db.session().query(User).count(), post_count = db.session().query(Post).count())
 
-@app.route("/users/")
-@admin_required
-def users():
-	return render_template("users.html", users = User.query.all())
-
 @app.route("/404/")
 def error404():
 	return render_template("404.html")
