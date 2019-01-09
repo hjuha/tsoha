@@ -26,6 +26,7 @@ def index_by_page_id(page_id):
 	last_page_id = len(threads) // THREADS_PER_PAGE
 	if len(threads) % THREADS_PER_PAGE != 0:
 		last_page_id += 1
+	last_page_id = max(1, last_page_id)
 
 	display_threads = threads[begin:end]
 

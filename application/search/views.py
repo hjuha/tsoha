@@ -51,6 +51,7 @@ def search():
 	last_page_id = len(results) // ITEMS_PER_PAGE
 	if len(results) % ITEMS_PER_PAGE != 0:
 		last_page_id += 1
+	last_page_id = max(1, last_page_id)
 
 	results = results[begin:end]
 
