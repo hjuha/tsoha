@@ -9,7 +9,7 @@ from application.categories.models import Category, CategoryThread
 
 def trim_end(msg):
 	# remove last character as long as it's whitespace or newline
-	while msg[-1] == ' ' or msg[-1] == '\n':
+	while len(msg) > 1 and (msg[-1] == ' ' or msg[-1] == '\n'):
 		msg = msg[:-1]
 	return msg
 
