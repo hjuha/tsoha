@@ -2,6 +2,7 @@ from application import db
 from application.models import Base
 import application.threads as threads
 from sqlalchemy.sql import text
+from datetime import timedelta, date
 
 class User(Base):
 	__tablename__ = "account"
@@ -77,3 +78,19 @@ class User(Base):
 
 	def get_latest_posts(self):
 		return User.latest_posts(self.id)
+
+	@staticmethod
+	def active_users():
+		activity_threshold = date.today() - timedelta(7)
+		stmt = text("SELECT COUNT(DISTINCT Account.id) FROM Account" \
+					" LEFT JOIN Post ON Post.sender_id = Account.id" \
+					" WHERE Post.date_modified >= :time").params(time = activity_threshold)
+
+		res = db.engine.execute(stmt)
+
+		for row in res:
+			if row[0] == None:
+				return 0
+			else:
+				return row[0]
+		return 0

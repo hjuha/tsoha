@@ -9,14 +9,20 @@
 		</p>
 	</div>
 
+	<h2 class="display-5">Foorumin tilastot</h2>
+	Käyttäjiä: {{ user_count }}<br>
+	Aktiivisia käyttäjiä: {{ active }}<br>
+	Viestiketjuja: {{ threads|length }}<br>
+	Viestejä: {{ post_count }}<br>
+
 	<hr>
 
 	<div class="row">
 		<div class="col-sm-8">
-			<h1 class="display-4">Viestiketjut</h1>
+			<h1 class="display-5">Viestiketjut</h1>
 		</div>
 		<div class="col-sm-4">
-			<a style="float: right; margin-top: 20px" href="/thread/new/">
+			<a style="float: right; margin-top: 10px" href="/thread/new/">
 				<button type="button" class="btn btn-primary">Uusi viestiketju</button>
 			</a>
 		</div>
@@ -44,7 +50,7 @@
 
 	{% for thread in threads %}
 		<div class="container">
-			<h2 class="display-4"><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
+			<h2 class="display-5"><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
 			{% for category in thread.get_categories() %}
 				<span class="badge badge-secondary">{{ category.name }}</span> 
 			{% endfor %}

@@ -1,7 +1,7 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
 from application.auth.models import User
-from application.threads.models import Thread
+from application.threads.models import Thread, Post
 from application.threads.forms import ThreadForm
 from application.utils.date_format import date_to_string
 from application import admin_required
@@ -30,7 +30,7 @@ def index_by_page_id(page_id):
 
 	display_threads = threads[begin:end]
 
-	return render_template("index.html", threads = display_threads, page_id = page_id, last_page_id = last_page_id)
+	return render_template("index.html", threads = display_threads, page_id = page_id, last_page_id = last_page_id, active = User.active_users(), user_count = db.session().query(User).count(), post_count = db.session().query(Post).count())
 
 @app.route("/users/")
 @admin_required

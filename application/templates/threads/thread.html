@@ -76,7 +76,7 @@
 		</p>
 	{% endfor %}
 	
-	<h2>Vastaa viestiketjuun</h2>
+	<h2 class="display-5">Vastaa viestiketjuun</h2>
 	{% if current_user.is_authenticated %}
 		<form method="POST" action="{{ url_for('reply_thread', thread_id = thread.id) }}">
 			<div class="form-group">

@@ -196,7 +196,7 @@
 		{% if results|length > 0 %}
 			{% for thread in results %}
 				<div class="container">
-					<h2 class="display-4"><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
+					<h2 class="display-5"><a href="{{ url_for('get_thread', thread_id = thread.id )}}">{{ thread.topic }}</a></h2>
 					{% for category in thread.get_categories() %}
 						<span class="badge badge-secondary">{{ category.name }}</span> 
 					{% endfor %}
@@ -208,7 +208,7 @@
 				<hr class="my-4">
 			{% endfor %}
 		{% else %}
-			<h2 class="display-4">Ei tuloksia.</h2>
+			<h2 class="display-5">Ei tuloksia.</h2>
 		{% endif %}
 	{% elif type == "post" %}
 		{% if results|length > 0 %}
@@ -243,7 +243,7 @@
 				</p>
 			{% endfor %}
 		{% else %}
-			<h2 class="display-4">Ei tuloksia.</h2>
+			<h2 class="display-5">Ei tuloksia.</h2>
 		{% endif %}
 	{% endif %}
 </p>
