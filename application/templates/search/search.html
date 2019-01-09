@@ -50,32 +50,34 @@
 				<!-- WTForms adds <li> tags to RadioField, so we will use raw HTML instead -->
 				{% if type != "post" %}
 					<div class="form-group">
-						<label>Hae</label>
+						Hae
+						<p style="margin-bottom: 8px">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="type" value="thread" checked>
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="type" value="thread" id="thread" checked>
+							<label class="form-check-label" for="thread">
 								viestiketjua
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="type" value="post">
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="type" value="post" id="post">
+							<label class="form-check-label" for="post">
 								viestiä
 							</label>
 						</div>
 					</div>
 				{% else %}
 					<div class="form-group">
-						<label>Hae</label>
+						Hae
+						<p style="margin-bottom: 8px">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="type" value="thread">
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="type" value="thread" id="thread">
+							<label class="form-check-label" for="thread">
 								viestiketjua
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="type" value="post" checked>
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="type" value="post" id="post" checked>
+							<label class="form-check-label" for="post">
 								viestiä
 							</label>
 						</div>
@@ -84,32 +86,34 @@
 				
 				{% if ordering == "date" %}
 					<div class="form-group">
-						<label>Järjestysperuste</label>
+						Järjestysperuste
+						<p style="margin-bottom: 8px">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="ordering" value="date" checked>
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="ordering" id="date" value="date" checked>
+							<label class="form-check-label" for="date">
 								päivämäärä
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="ordering" value="posts">
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="ordering" id="posts" value="posts">
+							<label class="form-check-label" for="posts">
 								vastausten määrä
 							</label>
 						</div>
 					</div>
 				{% else %}
 					<div class="form-group">
-						<label>Järjestysperuste</label>
+						Järjestysperuste
+						<p style="margin-bottom: 8px">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="ordering" value="date">
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="ordering" id="date" value="date">
+							<label class="form-check-label" for="date">
 								päivämäärä
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="ordering" value="posts" checked>
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="ordering" id="posts" value="posts" checked>
+							<label class="form-check-label" for="posts">
 								vastausten määrä
 							</label>
 						</div>
@@ -118,32 +122,34 @@
 
 				{% if ascending != "true" %}
 					<div class="form-group">
-						<label>Järjestä</label>
+						Järjestä
+						<p style="margin-bottom: 8px">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="ascending" value="false" checked>
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="ascending" id="desc" value="false" checked>
+							<label class="form-check-label" for="desc">
 								laskevaan järjestykseen
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="ascending" value="true">
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="ascending" id="asc" value="true">
+							<label class="form-check-label" for="asc">
 								kasvavaan järjestykseen
 							</label>
 						</div>
 					</div>
 				{% else %}
 					<div class="form-group">
-						<label>Järjestä</label>
+						Järjestä
+						<p style="margin-bottom: 8px">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="ascending" value="false">
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="ascending" id="desc" value="false">
+							<label class="form-check-label" for="desc">
 								laskevaan järjestykseen
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="ascending" value="true" checked>
-							<label class="form-check-label">
+							<input class="form-check-input" type="radio" name="ascending" id="asc" value="true" checked>
+							<label class="form-check-label" for="asc">
 								kasvavaan järjestykseen
 							</label>
 						</div>
@@ -152,17 +158,18 @@
 			</div>
 			<div class="col-sm-3">
 				<div class="form-group">
-					<label>Kuuluu kategoriaan</label>
+					Kuuluu kategoriaan
+					<p style="margin-bottom: 8px">
 					<div class="form-check">
-						<input class="form-check-input" type="radio" value="0" name="category_id" {% if category_id == 0 %} checked {% endif %}>
-						<label class="form-check-label">
+						<input class="form-check-input" type="radio" id="any" value="0" name="category_id" {% if category_id == 0 %} checked {% endif %}>
+						<label class="form-check-label" for="any">
 							Hae kaikista viesteistä
 						</label>
 					</div>
 					{% for category in categories %}
 						<div class="form-check">
-							<input class="form-check-input" type="radio" value="{{ category.id }}" name="category_id" {% if category_id == category.id %} checked {% endif %}>
-							<label class="form-check-label">
+							<input class="form-check-input" id="category{{ category.id }}" type="radio" value="{{ category.id }}" name="category_id" {% if category_id == category.id %} checked {% endif %}>
+							<label class="form-check-label" for="category{{ category.id }}">
 								<span class="badge badge-secondary">{{ category.name }}</span>
 							</label>
 						</div>
@@ -217,11 +224,11 @@
 					<div class="card-body">
 						<h6 class="card-subtitle mb-2 text-muted">
 							<small>
-								<i>
+								<em>
 									Julkaistu viestiketjussa: <a href="{{ url_for('get_thread', thread_id = post.thread_id) }}">
 										{{ post.get_topic() }}
 									</a>
-								</i>
+								</em>
 							</small>
 						</h6>
 						<hr>
