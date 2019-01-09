@@ -50,8 +50,7 @@
 				<!-- WTForms adds <li> tags to RadioField, so we will use raw HTML instead -->
 				{% if type != "post" %}
 					<div class="form-group">
-						Hae
-						<p style="margin-bottom: 8px">
+						<label>Hae</label>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="type" value="thread" id="thread" checked>
 							<label class="form-check-label" for="thread">
@@ -67,8 +66,7 @@
 					</div>
 				{% else %}
 					<div class="form-group">
-						Hae
-						<p style="margin-bottom: 8px">
+						<label>Hae</label>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="type" value="thread" id="thread">
 							<label class="form-check-label" for="thread">
@@ -86,8 +84,7 @@
 				
 				{% if ordering == "date" %}
 					<div class="form-group">
-						Järjestysperuste
-						<p style="margin-bottom: 8px">
+						<label>Järjestysperuste</label>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="ordering" id="date" value="date" checked>
 							<label class="form-check-label" for="date">
@@ -103,8 +100,7 @@
 					</div>
 				{% else %}
 					<div class="form-group">
-						Järjestysperuste
-						<p style="margin-bottom: 8px">
+						<label>Järjestysperuste</label>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="ordering" id="date" value="date">
 							<label class="form-check-label" for="date">
@@ -122,8 +118,7 @@
 
 				{% if ascending != "true" %}
 					<div class="form-group">
-						Järjestä
-						<p style="margin-bottom: 8px">
+						<label>Järjestä</label>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="ascending" id="desc" value="false" checked>
 							<label class="form-check-label" for="desc">
@@ -139,8 +134,7 @@
 					</div>
 				{% else %}
 					<div class="form-group">
-						Järjestä
-						<p style="margin-bottom: 8px">
+						<label>Järjestä</label>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="ascending" id="desc" value="false">
 							<label class="form-check-label" for="desc">
@@ -158,8 +152,7 @@
 			</div>
 			<div class="col-sm-3">
 				<div class="form-group">
-					Kuuluu kategoriaan
-					<p style="margin-bottom: 8px">
+					<label>Kuuluu kategoriaan</label>
 					<div class="form-check">
 						<input class="form-check-input" type="radio" id="any" value="0" name="category_id" {% if category_id == 0 %} checked {% endif %}>
 						<label class="form-check-label" for="any">
