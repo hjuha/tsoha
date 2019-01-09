@@ -55,9 +55,19 @@
 					</div>
 					<div class="col-sm-1 voting-container">
 						<div class="voting">
-							<a class="vote btn btn-link btn-lg" href="#" role="button">&#x2C4;</a><br>
-							<span class="vote-sum">0</span><br>
-							<a class="vote btn btn-link btn-lg" href="#" role="button">&#x2C5;</a>
+							{% if post.get_vote_of_current_user() == 0 %}
+								<a class="vote btn btn-link btn-lg" href="{{ url_for('upvote', post_id = post.id ) }}" role="button">&#x2C4;</a><br>
+								<span class="vote-sum">{{ post.get_sum_of_votes() }}</span><br>
+								<a class="vote btn btn-link btn-lg" href="{{ url_for('downvote', post_id = post.id ) }}" role="button">&#x2C5;</a>
+							{% elif post.get_vote_of_current_user() == 1 %}
+								<a class="vote btn btn-link btn-lg chosen" role="button">&#x2C4;</a><br>
+								<span class="vote-sum">{{ post.get_sum_of_votes() }}</span><br>
+								<a class="vote btn btn-link btn-lg unchosen" role="button">&#x2C5;</a>
+							{% else %}
+								<a class="vote btn btn-link btn-lg unchosen" role="button">&#x2C4;</a><br>
+								<span class="vote-sum">{{ post.get_sum_of_votes() }}</span><br>
+								<a class="vote btn btn-link btn-lg chosen" role="button">&#x2C5;</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>

@@ -144,5 +144,35 @@ class Post(ThreadBase):
 
 		return results
 
+	@staticmethod
+	def get_vote_of_user(post_id, user_id):
+		stmt = text("SELECT Vote.value FROM Vote" \
+					" WHERE Vote.post_id = :pid" \
+					" AND Vote.sender_id = :sid").params(pid = post_id, sid = user_id)
+		res = db.engine.execute(stmt)
+		for row in res:
+			return row[0]
+		return 0
+
+	@staticmethod
+	def sum_of_votes_on_post(post_id):
+		stmt = text("SELECT SUM(Vote.value) FROM Vote" \
+					" WHERE Vote.post_id = :pid").params(pid = post_id)
+		res = db.engine.execute(stmt)
+		for row in res:
+			if row[0] == None:
+				return 0
+			else:
+				return row[0]
+		return 0
+
+	def get_sum_of_votes(self):
+		return Post.sum_of_votes_on_post(self.id)
+
+	def get_vote_of_current_user(self):
+		if current_user and current_user.is_authenticated:
+			return Post.get_vote_of_user(self.id, current_user.get_id())
+		return 0;
+
 	def get_topic(self):
 		return Thread.query.get(self.thread_id).topic

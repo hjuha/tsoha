@@ -6,6 +6,7 @@ from application.threads.forms import ThreadForm, PostForm
 from flask_login import login_required, current_user
 from application.utils.date_format import date_to_string
 from application.categories.models import Category, CategoryThread
+from application.votes.models import Vote
 
 def trim_end(msg):
 	# remove last character as long as it's whitespace or newline
@@ -144,3 +145,27 @@ def delete_thread(thread_id):
 		return redirect(url_for("index"))
 	except ValueError:
 		return redirect(url_for("error404"))
+
+@app.route("/upvote/<post_id>/")
+@login_required
+def upvote(post_id):
+	post_id = int(post_id)
+	post = Post.query.get(post_id)
+	user_id = current_user.get_id()
+	if not Post.get_vote_of_user(post_id, user_id):
+		vote = Vote(1, post_id, user_id)
+		db.session().add(vote)
+		db.session().commit()
+	return redirect(url_for("get_thread", thread_id = post.thread_id))
+
+@app.route("/downvote/<post_id>/")
+@login_required
+def downvote(post_id):
+	post_id = int(post_id)
+	post = Post.query.get(post_id)
+	user_id = current_user.get_id()
+	if not Post.get_vote_of_user(post_id, user_id):
+		vote = Vote(-1, post_id, user_id)
+		db.session().add(vote)
+		db.session().commit()
+	return redirect(url_for("get_thread", thread_id = post.thread_id))
