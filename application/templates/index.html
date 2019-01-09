@@ -13,7 +13,7 @@
 
 	<div class="row">
 		<div class="col-sm-8">
-			<h1 class="display-4">Viimeisimmät viestiketjut</h1>
+			<h1 class="display-4">Viestiketjut</h1>
 		</div>
 		<div class="col-sm-4">
 			<a style="float: right; margin-top: 20px" href="/thread/new/">
@@ -22,6 +22,24 @@
 		</div>
 	</div>
 	
+	<hr>
+
+	{% if last_page_id != 1 %}
+		<div class="float-left">
+			{% if page_id != 1 %}
+				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = 1) }}" role="button">Uusimmat viestit</a>
+				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = page_id - 1) }}" role="button">Uudemmat viestit</a>
+			{% endif %}
+		</div>
+		<div class="float-right">
+			{% if page_id != last_page_id %}
+				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = page_id + 1) }}" role="button">Vanhemmat viestit</a>
+				<a class="btn btn-primary" href="{{ url_for('index_by_page_id', page_id = last_page_id) }}" role="button">Vanhimmat viestit</a>
+			{% endif %}
+		</div>
+
+		<br style="line-height: 230%">
+	{% endif %}
 	<hr>
 
 	{% for thread in threads %}
