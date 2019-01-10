@@ -17,7 +17,10 @@ Kullakin käyttäjällä on myös profiilisivu, josta näkyy yleistietoa käytt�
 Linkki: [Käyttötapaukset](https://github.com/Kalakuh/tsoha/blob/master/documentation/use_cases.md)
 
 ## Asennusohje
-Linkki: [Asennus](https://github.com/Kalakuh/tsoha/blob/master/documentation/installation.md)
+Linkki: [Asennusohje](https://github.com/Kalakuh/tsoha/blob/master/documentation/installation.md)
+
+## Käyttöohje
+Linkki: [Käyttöohje](https://github.com/Kalakuh/tsoha/blob/master/documentation/manual.md)
 
 ## Tietokantakaavio
 Linkki: [Tietokantakaavio](https://github.com/Kalakuh/tsoha/blob/master/documentation/relation_diagram.png)
