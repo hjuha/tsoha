@@ -22,5 +22,8 @@ Linkki: [Asennusohje](https://github.com/Kalakuh/tsoha/blob/master/documentation
 ## Käyttöohje
 Linkki: [Käyttöohje](https://github.com/Kalakuh/tsoha/blob/master/documentation/manual.md)
 
+## Toteutus
+Linkki: [Toteutus](https://github.com/Kalakuh/tsoha/blob/master/documentation/implementation.md)
+
 ## Tietokantakaavio
 Linkki: [Tietokantakaavio](https://github.com/Kalakuh/tsoha/blob/master/documentation/relation_diagram.png)
