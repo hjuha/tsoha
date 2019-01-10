@@ -27,3 +27,6 @@ Linkki: [Toteutus](https://github.com/Kalakuh/tsoha/blob/master/documentation/im
 
 ## Tietokantakaavio
 Linkki: [Tietokantakaavio](https://github.com/Kalakuh/tsoha/blob/master/documentation/relation_diagram.png)
+
+## Omat kokemukset
+Linkki: [Kokemukset](https://github.com/Kalakuh/tsoha/blob/master/documentation/own_experiences.md)
