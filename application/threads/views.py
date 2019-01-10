@@ -51,7 +51,7 @@ def post_new_thread():
 	db.session().add(post)
 	db.session().commit()
 
-	return redirect(url_for("index"))
+	return redirect(url_for("get_thread", thread_id = thread.id))
 
 @app.route("/thread/<thread_id>/", methods = ["POST"])
 @login_required
