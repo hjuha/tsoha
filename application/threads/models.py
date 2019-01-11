@@ -12,7 +12,7 @@ class ThreadBase(Base):
 
 	@declared_attr
 	def sender_id(self):
-		return db.Column(db.Integer, db.ForeignKey("account.id"), nullable = False)
+		return db.Column(db.Integer, db.ForeignKey("account.id"), nullable = False, index = True)
 
 	def get_sender(self):
 		return auth.models.User.query.get(self.sender_id)
@@ -98,7 +98,7 @@ class Thread(ThreadBase):
 class Post(ThreadBase):
 	content = db.Column(db.String(1000), nullable = False)
 
-	thread_id = db.Column(db.Integer, db.ForeignKey("thread.id"), nullable = False)
+	thread_id = db.Column(db.Integer, db.ForeignKey("thread.id"), nullable = False, index = True)
 
 	def __init__(self, content, sender_id, thread_id):
 		self.content = content

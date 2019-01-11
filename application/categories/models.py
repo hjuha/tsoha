@@ -9,8 +9,8 @@ class Category(Base):
 		self.name = name
 
 class CategoryThread(Base):
-	category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable = False)
-	thread_id = db.Column(db.Integer, db.ForeignKey("thread.id"), nullable = False)
+	category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable = False, index = True)
+	thread_id = db.Column(db.Integer, db.ForeignKey("thread.id"), nullable = False, index = True)
 
 	def __init__(self, category_id, thread_id):
 		self.category_id = category_id
