@@ -111,6 +111,15 @@ def delete_post(post_id):
 
 	return redirect(url_for('get_thread', thread_id = thread.id))
 
+@app.route("/post/<post_id>/", methods = ["GET"])
+def get_post(post_id):
+	try:
+		post_id = int(post_id)
+		post = Post.query.get(post_id)
+		return render_template("threads/post.html", post = post, form = PostForm())		
+	except ValueError:
+		return redirect(url_for("error404"))
+
 @app.route("/thread/<thread_id>/", methods = ["GET"])
 def get_thread(thread_id):
 	try:

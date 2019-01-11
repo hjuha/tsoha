@@ -19,14 +19,18 @@
 					<div class="col-sm-11">
 						<h5 class="card-title"><a href="{{ url_for('get_profile', user_id = post.sender_id) }}">{{ post.get_sender().first_name }} {{ post.get_sender().surname }}</a></h5>
 						
-						<h6 class="card-subtitle mb-2 text-muted">
-						{% if post.date_created == post.date_modified %}
-							<small>Julkaistu {{ post.get_created() }}</small>
-						{% else %}
-							<small>Muokattu {{ post.get_modified() }}</small>
-						{% endif %}
-						</h6>
-
+						<a href="{{ url_for('get_post', post_id = post.id) }}">
+							<h6 class="card-subtitle mb-2 text-muted">
+								<u>
+									{% if post.date_created == post.date_modified %}
+										<small>Julkaistu {{ post.get_created() }}</small>
+									{% else %}
+										<small>Muokattu {{ post.get_modified() }}</small>
+									{% endif %}
+								</u>
+							</h6>
+						</a>
+						
 						<p class="card-text">
 							<span style="white-space: pre-wrap; font-size: 16px">{{ post.content }}</span>
 						</p>
