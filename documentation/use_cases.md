@@ -28,14 +28,16 @@ Ohjelmassa on kolme käyttäjäryhmää: kirjautumaton käyttäjä, (kirjautunut
 * Käyttäjä voi poistaa oman viestiketjunsa
 * Käyttäjä voi lisätä oman viestiketjunsa eri kategorioihin
 * Käyttäjä voi lisätä viestin viestiketjuun
+* Käyttäjä voi muokata oman viestiketjunsa aihetta
 * Ylläpitäjä voi poistaa viestiketjun
 
 ## Viesti
 
+* Kirjautumaton käyttäjä voi avata viestin sivun painamalla viestiketjussa sen aikaleimaa
+* Kirjautumaton käyttäjä näkee viestissä äänten yhteissumman
 * Käyttäjä voi muokata omaa viestiään
 * Käyttäjä voi poistaa oman viestinsä
 * Käyttäjä voi äänestää pitääkö viestistä
-* Kirjautumaton käyttäjä näkee viestissä äänten yhteissumman
 * Käyttäjä näkee viestissä oman äänensä
 * Ylläpitäjä voi muokata viestejä
 * Ylläpitäjä voi poistaa viestejä
