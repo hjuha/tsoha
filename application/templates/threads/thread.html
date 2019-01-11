@@ -6,9 +6,18 @@
 
 	{% if thread.is_deletable() %}
 		<p>
-			<a style="margin-left: 15px" href="{{ url_for('delete_thread', thread_id = thread.id) }}">
-				<button type="button" class="btn btn-sm btn-danger">Poista viestiketju</button>
-			</a>
+			<a class="btn btn-sm btn-primary" style="margin-left: 15px" onclick="document.getElementById('rename').style.display = 'block'">Muokkaa aihetta</a>
+			<a class="btn btn-sm btn-danger" style="margin-left: 15px" href="{{ url_for('delete_thread', thread_id = thread.id) }}">Poista viestiketju</a>
+		</p>
+		<form id="rename" style="display: none" method="POST" action="{{ url_for('rename_thread', thread_id = thread.id) }}">
+			<hr>
+			<div class="form-group">
+				<label for="new-topic">Aihe</label>
+				<input class="form-control" name="topic" id="new-topic" placeholder="Uusi aihenimi">
+			</div>
+			<input class="btn btn-primary btn-small" type="submit" value="Muokkaa aihetta">
+
+		</form>
 		</p>
 	{% endif %}
 

@@ -53,6 +53,20 @@ def post_new_thread():
 
 	return redirect(url_for("get_thread", thread_id = thread.id))
 
+@app.route("/rename_thread/<thread_id>/", methods = ["POST"])
+@login_required
+def rename_thread(thread_id):
+	thread_id = int(thread_id)
+	topic = trim_end(request.form.get("topic"))
+	thread = Thread.query.get(thread_id)
+
+	if current_user.is_authenticated:
+		user = User.query.get(current_user.get_id())
+		if user.is_admin() or user.id == thread.sender_id:
+			thread.topic = topic
+			db.session().commit()
+	return redirect(url_for("get_thread", thread_id = thread.id))
+
 @app.route("/thread/<thread_id>/", methods = ["POST"])
 @login_required
 def reply_thread(thread_id):
