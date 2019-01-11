@@ -13,23 +13,10 @@ Kullakin käyttäjällä on myös profiilisivu, josta näkyy yleistietoa käytt�
 
 # Dokumentaatio
 
-## Käyttötapaukset
-Linkki: [Käyttötapaukset](https://github.com/Kalakuh/tsoha/blob/master/documentation/use_cases.md)
-
-## Asennusohje
-Linkki: [Asennusohje](https://github.com/Kalakuh/tsoha/blob/master/documentation/installation.md)
-
-## Käyttöohje
-Linkki: [Käyttöohje](https://github.com/Kalakuh/tsoha/blob/master/documentation/manual.md)
-
-## Toteutus
-Linkki: [Toteutus](https://github.com/Kalakuh/tsoha/blob/master/documentation/implementation.md)
-
-## Tietokanta
-Linkki: [Tietokanta](https://github.com/Kalakuh/tsoha/blob/master/documentation/database.md)
-
-## Tietokantakaavio
-Linkki: [Tietokantakaavio](https://github.com/Kalakuh/tsoha/blob/master/documentation/relation_diagram.png)
-
-## Omat kokemukset
-Linkki: [Kokemukset](https://github.com/Kalakuh/tsoha/blob/master/documentation/own_experiences.md)
+* [Käyttötapaukset](https://github.com/Kalakuh/tsoha/blob/master/documentation/use_cases.md)
+* [Asennusohje](https://github.com/Kalakuh/tsoha/blob/master/documentation/installation.md)
+* [Käyttöohje](https://github.com/Kalakuh/tsoha/blob/master/documentation/manual.md)
+* [Toteutus](https://github.com/Kalakuh/tsoha/blob/master/documentation/implementation.md)
+* [Tietokanta](https://github.com/Kalakuh/tsoha/blob/master/documentation/database.md)
+* [Tietokantakaavio](https://github.com/Kalakuh/tsoha/blob/master/documentation/relation_diagram.png)
+* [Kokemukset](https://github.com/Kalakuh/tsoha/blob/master/documentation/own_experiences.md)
