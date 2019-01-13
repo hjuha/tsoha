@@ -30,6 +30,11 @@ Viestiketjun voi luoda etusivulla _Uusi viestiketju_ -painiketta. Ilmestyvällä
 
 Viestiketjuun voi siirtyä painamalla sen otsikosta etusivulla, hakutoiminnossa tai käyttäjien profiilisivuilla.
 
+
+### Viestiketjun uudelleennimeäminen
+
+Oman viestiketjunsa voi uudelleennimetä painamalla viestiketjun sivulla otsikon alapuolelta _Muokkaa aihetta_ -painiketta.
+
 ### Viestiketjun poistaminen
 
 Oman viestiketjunsa voi poistaa painamalla viestiketjun sivulla otsikon alapuolelta _Poista viestiketju_ tai etusivun listauksesta viestiketjun kuvauksen alta vastaavaa painiketta.
@@ -41,6 +46,10 @@ Viestiketjuun voi vastata viestiketjun sivulla täyttämällä sivun alalaidassa
 ### Viestin muokkaaminen
 
 Omaa viestiään voi muokata painamalla viestin alla olevaa _Muokkaa_-painiketta, kirjoittamalla alle ilmestyvään tekstikenttään uuden sisällön ja vahvistamalla muutoksen painamalla _Muokkaa vastausta_.
+
+### Viestiin siirtyminen
+
+Viestiin voi siirtyä painamalla viestiketjussa sen julkaisu- tai muokkausaikaa.
 
 ### Viestin poistaminen
 
