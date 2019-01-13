@@ -45,13 +45,13 @@ SELECT Thread.id as id
 	FROM Thread
 	WHERE Thread.sender_id = ?
 	ORDER BY Thread.date_created DESC
-	LIMIT 10
+	LIMIT 10;
 
 SELECT Post.id as id
 	FROM Post
 	WHERE Post.sender_id = ?
 	ORDER BY Post.date_created DESC
-	LIMIT 10
+	LIMIT 10;
 ```
 * Kirjautumaton käyttäjä näkee tunnuksen iän ja luotujen viestien ja viestiketjujen määrän käyttäjän käyttäjäsivulla
 ```SQL
