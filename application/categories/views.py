@@ -47,8 +47,8 @@ def edit_category(category_id):
 @admin_required
 def delete_category(category_id):
 	category = Category.query.get(int(category_id))
-	db.session().delete(category)
 	for categorythread in category.categorythreads:
-					db.session().delete(categorythread)
+		db.session().delete(categorythread)
+	db.session().delete(category)
 	db.session().commit()
 	return redirect(url_for("get_categories"))
