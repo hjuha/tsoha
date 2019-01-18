@@ -10,13 +10,7 @@ from flask_login import current_user
 
 ITEMS_PER_PAGE = 10
 
-@app.route("/search/", methods=["GET", "POST"])
-def search():
-	if request.method == "GET":
-		categories = Category.query.all()
-		form = SearchForm()
-		return render_template("search/search.html", categories = categories, form = form, results = [], type = "None", ascending = "false", ordering = "date", category_id = 0, page_id = 1, last_page_id = 1)
-
+def get_params(request):
 	page_id = max(int(request.form.get("page_id")), 1)
 	category_id = request.form.get("category_id")
 	query_type = request.form.get("type")
@@ -36,6 +30,19 @@ def search():
 		before_date = date.today()
 
 	before_date += timedelta(1)
+
+	return [page_id, category_id, query_type, ordering, ascending, form, contains, name, after_date, before_date]
+
+
+@app.route("/search/", methods=["GET", "POST"])
+def search():
+	if request.method == "GET":
+		categories = Category.query.all()
+		form = SearchForm()
+		return render_template("search/search.html", categories = categories, form = form, results = [], type = "None", ascending = "false", ordering = "date", category_id = 0, page_id = 1, last_page_id = 1)
+
+	page_id, category_id, query_type, ordering, ascending, form, contains, name, after_date, before_date = get_params(request)
+
 	results = []
 
 	if query_type == "thread":
