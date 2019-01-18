@@ -38,6 +38,10 @@ def error404():
 
 @app.errorhandler(500)
 def on500(e):
+	# Error 500 happens currently basically only if the user tries to put invalid url,
+	#  because then e.g. a string is tried to be parsed as a string, which leads to an error.
+	# For database errors the page still displays a regular error message instead of 404 page,
+	#  so this should not cause trouble on finding them.
 	return render_template("404.html")
 
 @app.errorhandler(404)
