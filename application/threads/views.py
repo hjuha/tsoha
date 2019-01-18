@@ -31,11 +31,8 @@ def post_new_thread():
 		return render_template("threads/new_thread.html", form = form, categories = Category.query.all())
 
 	topic = form.topic.data
-
 	content = trim_end(form.content.data)
-
 	sender_id = current_user.id
-
 	thread = Thread(topic, sender_id)
 
 	db.session().add(thread)
@@ -120,6 +117,8 @@ def delete_post(post_id):
 	if current_user.is_authenticated:
 		user = User.query.get(current_user.get_id())
 		if user.is_admin() or user.id == post.sender_id:
+			for vote in post.votes:
+				db.session().delete(vote)
 			db.session().delete(post)
 			db.session().commit()
 
@@ -160,6 +159,8 @@ def delete_thread(thread_id):
 					db.session().delete(categorythread)
 				posts = Post.query.filter(Post.thread_id == thread_id)
 				for post in posts:
+					for vote in post.votes:
+						db.session().delete(vote)
 					db.session().delete(post)
 					
 				db.session().delete(thread)

@@ -99,6 +99,7 @@ class Post(ThreadBase):
 	content = db.Column(db.String(1000), nullable = False)
 
 	thread_id = db.Column(db.Integer, db.ForeignKey("thread.id"), nullable = False, index = True)
+	votes = db.relationship("Vote", backref = "post", lazy = True)
 
 	def __init__(self, content, sender_id, thread_id):
 		self.content = content
